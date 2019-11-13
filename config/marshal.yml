@@ -1,0 +1,7 @@
+
+marshal:
+  standalone: true
+  serverPort: 1125
+
+
+

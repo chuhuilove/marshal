@@ -16,6 +16,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.chuhui.marshal</groupId>
+            <artifactId>marshal-framework</artifactId>
+            <version>${MARSHAL-VERSION}</version>
+        </dependency>
     </dependencies>
 
 

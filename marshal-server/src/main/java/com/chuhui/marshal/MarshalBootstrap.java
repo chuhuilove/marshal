@@ -19,7 +19,7 @@ import java.net.URL;
 
 public class MarshalBootstrap {
 
-    final static  private Logger logger = LoggerFactory.getLogger(MarshalBootstrap.class);
+    final static private Logger logger = LoggerFactory.getLogger(MarshalBootstrap.class);
 
     private static final String USAGE =
             "Usage: MarshalBootstrap configFile ";
@@ -40,26 +40,33 @@ public class MarshalBootstrap {
         marshal.initConfig(args);
 
 
-
     }
 
     private void initConfig(String[] args) {
 
+        if (logger.isDebugEnabled()) {
+            logger.debug("start resolve config");
+        }
 
-        URL resource = getClass().getClassLoader().getResource("log4j.properties");
 
-
-        logger.info("start resolve config");
         MarshalConfig init = MarshalConfig.readConfigFromFile(args[0]);
 
         MarshalBasicConfig marshalBasic = init.getMarshalBasic();
 
-        if(marshalBasic==null){
-            // 记录日志...
-            logger.error("can't  resolved config to "+MarshalBasicConfig.class.getName());
+        if (marshalBasic == null) {
+            // resolve config xxx.yml error occur
+            // program exit
+            logger.error("can't  resolved config to " + MarshalBasicConfig.class.getName());
+            System.exit(1);
         }
 
+        if(marshalBasic.getStandalone()){
+            // 走单机模式
+            MarshalMain.run(init);
+        }else{
+            // 走集群模式
+            // TODO 集群模式还没有设计好...
+        }
     }
-
 
 }

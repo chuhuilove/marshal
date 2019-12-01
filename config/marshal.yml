@@ -3,5 +3,7 @@ marshalBasic:
   standalone: true
   serverPort: 1125
 
+serverFactory: com.chuhui.marshal.server.netty.NioServerFactory
+
 
 

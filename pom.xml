@@ -14,30 +14,31 @@
         <module>marshal-core</module>
         <module>marshal-client</module>
     </modules>
-
     <properties>
+        <!--<netty.version>4.1.40.Final</netty.version>-->
+        <netty.version>4.1.40.cyzi-custome</netty.version>
         <MARSHAL-VERSION>1.0.1</MARSHAL-VERSION>
+        <sl4j.version>1.7.28</sl4j.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+
     </properties>
 
 
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>${sl4j.version}</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.29</version>
+            <version>${sl4j.version}</version>
         </dependency>
 
-    </dependencies>
 
+    </dependencies>
 
 
 </project>

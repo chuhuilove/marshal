@@ -22,27 +22,25 @@ import static com.chuhui.marshal.framework.utils.FileUtils.openFileAsInputStream
 @Getter
 @Setter
 public class MarshalConfig {
-    final static  private Logger logger = LoggerFactory.getLogger(MarshalConfig.class);
+    final static private Logger logger = LoggerFactory.getLogger(MarshalConfig.class);
 
     private MarshalBasicConfig marshalBasic;
-
-
-    public MarshalConfig() {
-    }
+    /**
+     * 服务工厂
+     */
+    private String serverFactory;
 
 
     public static MarshalConfig readConfigFromFile(String configFileName) {
         InputStream fileStream = openFileAsInputStream(configFileName);
         Yaml yaml = new Yaml();
-        MarshalConfig config=null;
+        MarshalConfig config = null;
 
         try {
-            logger.error("start load config:{}",configFileName);
             config = yaml.loadAs(fileStream, MarshalConfig.class);
 
         } catch (Exception e) {
-
-            // 记录日志...
+            logger.error("resolved config file:{} failed,please check file and class:{} ", configFileName, MarshalConfig.class.getName(), e);
         }
 
         return config;
@@ -52,8 +50,16 @@ public class MarshalConfig {
     @Getter
     @Setter
     public static class MarshalBasicConfig {
+        /**
+         * 独立模式
+         */
         private Boolean standalone;
+        /**
+         * 服务端的端口
+         */
         private Integer serverPort;
+
+
 
     }
 

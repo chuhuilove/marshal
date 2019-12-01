@@ -1,4 +1,6 @@
-package com.chuhui.marshal.framework.utils;
+package com.chuhui.marshal.framework.utils.utils;
+
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.io.InputStream;
  * @Date: 2019/11/13 0013
  * @Description:TODO
  */
-public class FileUtils {
+public class MarshalFileUtils {
 
     // 假日知
 
@@ -23,7 +25,7 @@ public class FileUtils {
     public static InputStream openFileAsInputStream(String fileName) {
 
         try {
-            return org.apache.commons.io.FileUtils.openInputStream(new File(fileName));
+            return FileUtils.openInputStream(new File(fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }

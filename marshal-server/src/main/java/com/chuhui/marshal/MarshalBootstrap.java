@@ -27,9 +27,6 @@ public class MarshalBootstrap {
     public static void main(String[] args) {
 
 
-        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        URL resource = contextClassLoader.getResource("log4j.properties");
-
         if (args == null || args.length <= 0) {
             System.err.println("Please specify the profile location");
             System.err.println(USAGE);
@@ -49,7 +46,7 @@ public class MarshalBootstrap {
         }
 
 
-        MarshalConfig init = MarshalConfig.readConfigFromFile(args[0]);
+       final  MarshalConfig init = MarshalConfig.readConfigFromFile(args[0]);
 
         MarshalBasicConfig marshalBasic = init.getMarshalBasic();
 
@@ -60,9 +57,11 @@ public class MarshalBootstrap {
             System.exit(1);
         }
 
+        // 修改一下,不允许里面的东西进行修改...
+
         if(marshalBasic.getStandalone()){
             // 走单机模式
-            MarshalMain.run(init);
+            MarshalStandaloneMain.run(init);
         }else{
             // 走集群模式
             // TODO 集群模式还没有设计好...

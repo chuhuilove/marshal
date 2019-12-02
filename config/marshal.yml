@@ -2,8 +2,9 @@
 marshalBasic:
   standalone: true
   serverPort: 1125
+  maxClientConns: 50
 
-serverFactory: com.chuhui.marshal.server.netty.NioServerFactory
+serverFactory: com.chuhui.marshal.server.serverfactory.NettyServerFactory
 
 
 

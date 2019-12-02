@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
-import java.util.LinkedHashMap;
 
-import static com.chuhui.marshal.framework.utils.FileUtils.openFileAsInputStream;
+import static com.chuhui.marshal.framework.utils.utils.CustomizationFileUtils.openFileAsInputStream;
+
 
 /**
  * MarshalConfig
@@ -59,7 +59,10 @@ public class MarshalConfig {
          */
         private Integer serverPort;
 
-
+        /**
+         * 可连接的最大连接数
+         */
+        private Integer maxClientConns;
 
     }
 

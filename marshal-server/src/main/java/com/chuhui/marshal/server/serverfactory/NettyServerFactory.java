@@ -96,8 +96,6 @@ public class NettyServerFactory extends ServerContextFactory {
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            Channel channel = ctx.channel();
-
             LOG.info("invoked channelActive method...");
         }
 
@@ -110,7 +108,7 @@ public class NettyServerFactory extends ServerContextFactory {
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             if(msg instanceof ByteBuf){
                 ByteBuf byteBuf= (ByteBuf) msg;
-                LOG.info("invoked channelRead method...read msg:{}", byteBuf.toString(StandardCharsets.UTF_8));
+                LOG.info(Thread.currentThread().getName()+" invoked channelRead method...read msg:{}", byteBuf.toString(StandardCharsets.UTF_8));
             }
             String sendMessage = "from server message:" + UUID.randomUUID().toString().replaceAll("-", "");
             Channel channel = ctx.channel();
@@ -118,6 +116,9 @@ public class NettyServerFactory extends ServerContextFactory {
             ByteBuf byteBuf = Unpooled.directBuffer(sendBytes.length, sendBytes.length);
             byteBuf.writeBytes(sendBytes);
             channel.writeAndFlush(byteBuf);
+
+            // 设置一个队列，
+
         }
 
 

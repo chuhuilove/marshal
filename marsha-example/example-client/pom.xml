@@ -3,21 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>marshal</artifactId>
+        <artifactId>marsha-example</artifactId>
         <groupId>com.chuhui.marshal</groupId>
         <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>marshal-client</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.chuhui.marshal</groupId>
-            <artifactId>marshal-framework</artifactId>
-            <version>${MARSHAL-VERSION}</version>
-        </dependency>
-    </dependencies>
+    <groupId>com.chuhui.marshal</groupId>
+    <artifactId>example-client</artifactId>
+    <version>1.0.1</version>
 
 
 </project>

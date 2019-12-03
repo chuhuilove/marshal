@@ -13,6 +13,7 @@
         <module>marshal-server</module>
         <module>marshal-core</module>
         <module>marshal-client</module>
+        <module>marsha-example</module>
     </modules>
     <properties>
         <!--<netty.version>4.1.40.Final</netty.version>-->
@@ -20,9 +21,21 @@
         <MARSHAL-VERSION>1.0.1</MARSHAL-VERSION>
         <sl4j.version>1.7.28</sl4j.version>
         <commons-lang3.version>3.9</commons-lang3.version>
-
+        <spring-framework.version>5.1.10.cyzi</spring-framework.version>
+        <lombok.version>1.18.8</lombok.version>
     </properties>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
 

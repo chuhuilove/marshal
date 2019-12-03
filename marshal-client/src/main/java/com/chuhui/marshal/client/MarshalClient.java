@@ -12,6 +12,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -87,6 +88,12 @@ public class MarshalClient {
 
         @Override
         public void channelReadComplete(ChannelHandlerContext ctx) {
+
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             String s = "闫慧,憨猪猪,我爱你.我们俩还有可能吗?"+System.nanoTime();
 

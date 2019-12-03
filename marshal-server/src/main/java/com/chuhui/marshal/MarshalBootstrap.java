@@ -5,8 +5,6 @@ import com.chuhui.marshal.framework.utils.config.MarshalConfig.MarshalBasicConfi
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URL;
-
 /**
  * MarshalBootstrap
  * <p>

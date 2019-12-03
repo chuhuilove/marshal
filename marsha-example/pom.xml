@@ -24,9 +24,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot.version}</version>
+            <groupId>com.chuhui.marshal</groupId>
+            <artifactId>marshal-client</artifactId>
+            <version>${MARSHAL-VERSION}</version>
         </dependency>
     </dependencies>
 </project>

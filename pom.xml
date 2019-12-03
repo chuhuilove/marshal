@@ -21,8 +21,11 @@
         <MARSHAL-VERSION>1.0.1</MARSHAL-VERSION>
         <sl4j.version>1.7.28</sl4j.version>
         <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
         <spring-framework.version>5.1.10.cyzi</spring-framework.version>
         <lombok.version>1.18.8</lombok.version>
+
+
     </properties>
     <build>
         <plugins>

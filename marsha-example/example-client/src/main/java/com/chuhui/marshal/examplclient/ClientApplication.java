@@ -1,19 +1,21 @@
 package com.chuhui.marshal.examplclient;
 
-import com.chuhui.marshal.client.EnableMarshal;
+import com.chuhui.marshal.client.annotation.EnableMarshalConsumer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * ServerApplication
- * 示例服务
+ * ClientApplication
+ * 消费者示例
  *
  * @author: cyzi
  * @Date: 2019/12/3 0003
- * @Description:TODO
+ * @Description:
  */
-@EnableMarshal(value = "client-1", roles = EnableMarshal.ROLES.CLIENT, serverAddress = "127.0.0.1:11255")
 @SpringBootApplication
+@EnableMarshalConsumer(value = "consumer-1",
+        requireProducer = "server",
+        marshalServer = {"127.0.0.1:1125","127.0.0.1:1126"})
 public class ClientApplication {
 
     public static void main(String[] args) {

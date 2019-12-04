@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.Objects;
 
 import static com.chuhui.marshal.framework.utils.utils.DataCheckUtils.assertNotNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * MarshalMain
@@ -31,9 +33,9 @@ public final class MarshalStandaloneMain {
         try {
             ServerContextFactory contextFactory = ServerContextFactory.createContextFactory();
 
-            Integer serverPort = assertNotNull(config.getMarshalBasic().getServerPort(), "serverPort");
+            Integer serverPort = requireNonNull(config.getMarshalBasic().getServerPort(), "serverPort");
             InetSocketAddress socketAddress = new InetSocketAddress(serverPort);
-            Integer maxClientConns = assertNotNull(config.getMarshalBasic().getMaxClientConns(), "maxClientConns");
+            Integer maxClientConns = requireNonNull(config.getMarshalBasic().getMaxClientConns(), "maxClientConns");
             contextFactory.configure(socketAddress, maxClientConns);
             contextFactory.startup();
             logger.info("marshal server started");

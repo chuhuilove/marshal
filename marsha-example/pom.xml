@@ -14,6 +14,7 @@
     <modules>
         <module>example-server</module>
         <module>example-client</module>
+        <module>example-client-server</module>
     </modules>
 
     <properties>
@@ -27,6 +28,13 @@
             <groupId>com.chuhui.marshal</groupId>
             <artifactId>marshal-client</artifactId>
             <version>${MARSHAL-VERSION}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

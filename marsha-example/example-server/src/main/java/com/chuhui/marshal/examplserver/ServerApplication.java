@@ -1,6 +1,6 @@
 package com.chuhui.marshal.examplserver;
 
-import com.chuhui.marshal.client.EnableMarshal;
+import com.chuhui.marshal.client.annotation.EnableMarshalServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,7 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date: 2019/12/3 0003
  * @Description:TODO
  */
-@EnableMarshal(value = "server-1", roles = EnableMarshal.ROLES.SERVER, serverAddress = "127.0.0.1:1125")
+//@EnableMarshal(value = "server-1", roles = EnableMarshal.ROLES.SERVER, serverAddress = "127.0.0.1:1125")
+@EnableMarshalServer
 @SpringBootApplication
 public class ServerApplication {
 

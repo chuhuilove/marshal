@@ -20,12 +20,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.1.10.cyzi</version>
+            <version>${spring-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.1.10.cyzi</version>
+            <version>${spring-framework.version}</version>
         </dependency>
     </dependencies>
 

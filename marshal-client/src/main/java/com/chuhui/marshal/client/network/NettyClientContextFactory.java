@@ -64,7 +64,11 @@ public class NettyClientContextFactory extends AbstractClientContextFactory {
                     isConnected = true;
                     return;
                 } catch (Exception e) {
-                    logger.error("connect to server error:{}", address, e);
+
+                    if (socketAddresses.indexOf(address) == socketAddresses.size() - 1) {
+                        throw e;
+                    }
+                    logger.error("connect to server error:{},try next", address, e);
                 }
             }
         }

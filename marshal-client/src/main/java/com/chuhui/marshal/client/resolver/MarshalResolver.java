@@ -30,11 +30,17 @@ import java.util.*;
 public class MarshalResolver extends AbstractAnnotationResolver {
 
     final static private Logger logger = LoggerFactory.getLogger(MarshalResolver.class);
-
-
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
+    }
+
+
+    public void postProcessBeanFactory1(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+
+
+        String s = checkAnnotation(EnableMarshal.class);
 
 
         String[] beanDefinitionNames = beanFactory.getBeanDefinitionNames();
@@ -97,6 +103,8 @@ public class MarshalResolver extends AbstractAnnotationResolver {
 
                 Object controllerBean = beanFactory.getBean(controllerBeanName);
 
+
+
                 // 获取到了一个controller实例,
                 // 将这个实例分解,分解,
                 // 获取上面的最上面的RequestMapping
@@ -104,6 +112,7 @@ public class MarshalResolver extends AbstractAnnotationResolver {
                 // 将其组合一下,然后将其组合一下,
                 // TODO
                 // 老子突然间发现,写这玩意,貌似不是特别难啊.....
+                //// https://github.com/513667225/luban-register-center.git..进入误区了...再重新思考一下,该怎么整..
 
 //                controllerBean.getClass()
 
@@ -115,4 +124,8 @@ public class MarshalResolver extends AbstractAnnotationResolver {
 
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
+    }
 }

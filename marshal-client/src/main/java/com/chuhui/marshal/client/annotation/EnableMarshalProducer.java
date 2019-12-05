@@ -21,6 +21,29 @@ import java.lang.annotation.*;
 @Import(ProducerResolver.class)
 public @interface EnableMarshalProducer {
 
+    /**
+     * 生产者的名字
+     * @return 在整个集群中都是唯一的
+     */
+    String value();
+
+    /**
+     * 生产者所在的组
+     * @return 微服务组
+     */
+    String group();
+
+    /**
+     * marshal 服务器地址.
+     * @return
+     */
+    String[] marshalServer();
+
+    /**
+     * 生产者的ip:port
+     * @return
+     */
+    String selfAddress();
 
 
 }

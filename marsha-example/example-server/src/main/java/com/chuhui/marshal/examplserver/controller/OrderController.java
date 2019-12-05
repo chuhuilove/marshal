@@ -2,9 +2,7 @@ package com.chuhui.marshal.examplserver.controller;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +25,24 @@ public class OrderController {
         models.add(modelGenerator(userName, 2));
         models.add(modelGenerator(userName, 3));
         models.add(modelGenerator(userName, 4));
-
+        System.err.println("has invoked....orderService method");
         return models;
     }
+
+    @GetMapping("/orderServiceOne/{userName}")
+    public UserOrderModel orderServiceOne(@PathVariable String userName) {
+        UserOrderModel userOrderModel = modelGenerator(userName, Math.abs(userName.hashCode()) % 4);
+        System.err.println("has invoked....orderServiceOne method");
+        return userOrderModel;
+    }
+
+    @PostMapping(value = "/postRequest")
+    public int testPostRequest(@RequestBody UserOrderModel model){
+        System.err.println("has invoked....testPostRequest method");
+        return model.hashCode();
+
+    }
+
 
     static UserOrderModel modelGenerator(String userName, int index) {
         UserOrderModel model = new UserOrderModel();

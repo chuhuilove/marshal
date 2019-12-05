@@ -9,10 +9,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map.Entry;
+
 /**
  * ResolveEnableMarshalConsumer
  * {@code @EnableMarshalConsumer}注解解析器
- *
+ * <p>
  * 消费者解析器
  *
  * @author: cyzi
@@ -24,24 +26,16 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
     final static private Logger logger = LoggerFactory.getLogger(ConsumerResolver.class);
 
 
-
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
 
-        String[] beanDefinitionNames = beanFactory.getBeanDefinitionNames();
+//        String beanName = checkAnnotation(EnableMarshalConsumer.class);
 
-
-
-
-        checkAnnotation(EnableMarshalConsumer.class);
-
-
-
-//        connectToServer("");
+//        connectToServer(beanName);
     }
 
-private AbstractClientContextFactory clientContextFactory;
+
 
     void connectToServer(String beanName) {
         Object bean = beanFactory.getBean(beanName);
@@ -53,9 +47,13 @@ private AbstractClientContextFactory clientContextFactory;
         String[] requireProducer = consumer.requireProducer();
         String value = consumer.value();
 
-        clientContextFactory = AbstractClientContextFactory.createClientFactory(marshalServer);
-        clientContextFactory.startClient();
+        startRemoteClient(marshalServer);
 
         clientContextFactory.sendMessage("来自客户端的问候");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
     }
 }

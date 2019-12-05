@@ -13,9 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @SpringBootApplication
-@EnableMarshalConsumer(value = "consumer-1",
-        requireProducer = "server",
-        marshalServer = {"127.0.0.1:1125","127.0.0.1:1126"})
+//@EnableMarshalConsumer(value = "consumer-1",
+//        requireProducer = "server",
+//        marshalServer = {"127.0.0.1:1125","127.0.0.1:1126"})
 public class ClientApplication {
 
     public static void main(String[] args) {

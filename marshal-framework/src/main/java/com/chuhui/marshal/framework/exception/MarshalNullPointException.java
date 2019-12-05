@@ -1,4 +1,4 @@
-package com.chuhui.marshal.framework.utils.excaption;
+package com.chuhui.marshal.framework.exception;
 
 /**
  * MarshalNullPointException

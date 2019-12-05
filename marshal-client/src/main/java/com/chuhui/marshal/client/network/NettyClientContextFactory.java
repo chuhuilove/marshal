@@ -1,6 +1,6 @@
 package com.chuhui.marshal.client.network;
 
-import com.chuhui.marshal.framework.utils.utils.ServerFactoryUtils;
+import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -77,11 +77,7 @@ public class NettyClientContextFactory extends AbstractClientContextFactory {
 
     @Override
     public void sendMessage(String message) {
-        Channel channel = future.channel();
-
-        ByteBuf byteBuf = Unpooled.directBuffer();
-        byteBuf.writeBytes(message.getBytes());
-        channel.writeAndFlush(byteBuf);
+        sendMessage(message.getBytes());
     }
 
     @Override
@@ -89,5 +85,13 @@ public class NettyClientContextFactory extends AbstractClientContextFactory {
         if (object instanceof String) {
             sendMessage((String) object);
         }
+    }
+
+    @Override
+    public void sendMessage(byte[] bytes) {
+        Channel channel = future.channel();
+        ByteBuf byteBuf = Unpooled.directBuffer();
+        byteBuf.writeBytes(bytes);
+        channel.writeAndFlush(byteBuf);
     }
 }

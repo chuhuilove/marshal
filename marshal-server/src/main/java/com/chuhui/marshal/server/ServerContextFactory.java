@@ -1,7 +1,7 @@
 package com.chuhui.marshal.server;
 
 import com.chuhui.marshal.MarshalStandaloneMain;
-import com.chuhui.marshal.framework.utils.config.MarshalConfig;
+import com.chuhui.marshal.framework.config.MarshalConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

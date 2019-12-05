@@ -1,0 +1,25 @@
+// See README.txt for information and build instructions.
+//
+// Note: START and END tags are used in comments to define sections used in
+// tutorials.  They are not part of the syntax for Protocol Buffers.
+//
+// To get an in-depth walkthrough of this file and the related examples, see:
+// https://developers.google.com/protocol-buffers/docs/tutorials
+
+// [START declaration]
+syntax = "proto3";
+package com.chuhui.marshal.framework.transfer;
+
+// [END declaration]
+
+// [START java_declaration]
+option java_package = "com.chuhui.marshal.framework.transfer";
+option java_multiple_files = true;
+
+message ClientRequestPackage {
+    repeated string requireProducer=1;
+    string name = 2;
+    int32 requestFlag=3;
+}
+
+

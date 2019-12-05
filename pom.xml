@@ -26,6 +26,7 @@
 <!--        <spring-framework.version>5.1.10.RELEASE</spring-framework.version>-->
         <spring-framework.version>5.1.10.cyzi</spring-framework.version>
         <lombok.version>1.18.8</lombok.version>
+        <google-protocol.version>3.6.1</google-protocol.version>
 
 
     </properties>

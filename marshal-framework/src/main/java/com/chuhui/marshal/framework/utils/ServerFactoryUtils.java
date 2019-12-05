@@ -1,4 +1,4 @@
-package com.chuhui.marshal.framework.utils.utils;
+package com.chuhui.marshal.framework.utils;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;

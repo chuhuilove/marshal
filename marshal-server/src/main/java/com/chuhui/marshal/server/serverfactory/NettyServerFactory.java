@@ -1,6 +1,7 @@
 package com.chuhui.marshal.server.serverfactory;
 
-import com.chuhui.marshal.framework.utils.utils.ServerFactoryUtils;
+import com.chuhui.marshal.framework.transfer.ClientRequestPackage;
+import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import com.chuhui.marshal.server.ServerContextFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -109,7 +110,27 @@ public class NettyServerFactory extends ServerContextFactory {
             if(msg instanceof ByteBuf){
                 ByteBuf byteBuf= (ByteBuf) msg;
                 LOG.info(Thread.currentThread().getName()+" invoked channelRead method...read msg:{}", byteBuf.toString(StandardCharsets.UTF_8));
+
+
+                System.err.println("是否直接缓存:"+byteBuf.isDirect());
+                // 堆外内存,会出现的 java.lang.UnsupportedOperationException: direct buffer异常///
+                //
+                // https://stackoverflow.com/questions/52658774/netty-io-netty-buffer-bytebuf-array-throws-exception-direct-buffer
+
+                byte[] bytes = new byte[byteBuf.readableBytes()];
+                byteBuf.duplicate().readBytes(bytes);
+
+                ClientRequestPackage clientRequestPackage = ClientRequestPackage.parseFrom(bytes);
+
+                LOG.info(clientRequestPackage.toString());
+                LOG.info(clientRequestPackage.toString());
+                LOG.info(clientRequestPackage.toString());
+
             }
+
+
+
+
             String sendMessage = "from server message:" + UUID.randomUUID().toString().replaceAll("-", "");
             Channel channel = ctx.channel();
             byte[] sendBytes = sendMessage.getBytes();

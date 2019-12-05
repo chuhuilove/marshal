@@ -1,16 +1,13 @@
 package com.chuhui.marshal;
 
-import com.chuhui.marshal.framework.utils.config.MarshalConfig;
-import com.chuhui.marshal.framework.utils.config.MarshalConfig.MarshalBasicConfig;
+import com.chuhui.marshal.framework.config.MarshalConfig;
 import com.chuhui.marshal.server.ServerContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Objects;
 
-import static com.chuhui.marshal.framework.utils.utils.DataCheckUtils.assertNotNull;
 import static java.util.Objects.requireNonNull;
 
 /**

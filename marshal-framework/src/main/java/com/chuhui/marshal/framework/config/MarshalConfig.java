@@ -1,4 +1,4 @@
-package com.chuhui.marshal.framework.utils.config;
+package com.chuhui.marshal.framework.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 
-import static com.chuhui.marshal.framework.utils.utils.CustomizationFileUtils.openFileAsInputStream;
+import static com.chuhui.marshal.framework.utils.CustomizationFileUtils.openFileAsInputStream;
 
 
 /**

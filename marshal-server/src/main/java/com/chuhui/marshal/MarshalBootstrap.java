@@ -1,7 +1,7 @@
 package com.chuhui.marshal;
 
-import com.chuhui.marshal.framework.utils.config.MarshalConfig;
-import com.chuhui.marshal.framework.utils.config.MarshalConfig.MarshalBasicConfig;
+import com.chuhui.marshal.framework.config.MarshalConfig;
+import com.chuhui.marshal.framework.config.MarshalConfig.MarshalBasicConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,6 +2,7 @@ package com.chuhui.marshal.client.annotation;
 
 import com.chuhui.marshal.client.resolver.ConsumerResolver;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -9,7 +10,6 @@ import java.lang.annotation.*;
  * EnableMarshalConsumer
  * <p>
  * marshal服务消费者
- *
  *
  * @author: cyzi
  * @Date: 2019/12/4 0004
@@ -25,9 +25,11 @@ public @interface EnableMarshalConsumer {
 
     /**
      * 消费者端的名字
+     *
      * @return
      */
-    String value();
+    String name();
+
 
     /**
      * 消费者需要的生产者

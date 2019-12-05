@@ -11,6 +11,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,17 +31,14 @@ import java.util.*;
 public class MarshalResolver extends AbstractAnnotationResolver {
 
     final static private Logger logger = LoggerFactory.getLogger(MarshalResolver.class);
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
-    }
+
 
 
     public void postProcessBeanFactory1(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
+//        this.beanFactory = beanFactory;
 
 
-        String s = checkAnnotation(EnableMarshal.class);
+//        String s = checkAnnotation(EnableMarshal.class);
 
 
         String[] beanDefinitionNames = beanFactory.getBeanDefinitionNames();
@@ -92,8 +90,8 @@ public class MarshalResolver extends AbstractAnnotationResolver {
 
     private void getRequestMappingAndRegister(String enableMarshalBeanName, List<String> controllerBeanNames) {
 
-        Object bean = beanFactory.getBean(enableMarshalBeanName);
-        EnableMarshal annotation = bean.getClass().getAnnotation(EnableMarshal.class);
+//        Object bean = beanFactory.getBean(enableMarshalBeanName);
+//        EnableMarshal annotation = bean.getClass().getAnnotation(EnableMarshal.class);
 
 
         if (CollectionUtils.isNotEmpty(controllerBeanNames)) {
@@ -101,7 +99,7 @@ public class MarshalResolver extends AbstractAnnotationResolver {
 
             for (String controllerBeanName : controllerBeanNames) {
 
-                Object controllerBean = beanFactory.getBean(controllerBeanName);
+//                Object controllerBean = beanFactory.getBean(controllerBeanName);
 
 
 
@@ -126,6 +124,11 @@ public class MarshalResolver extends AbstractAnnotationResolver {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
     }
 }

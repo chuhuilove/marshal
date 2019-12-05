@@ -56,6 +56,13 @@
             <version>${commons-collections4.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${google-protocol.version}</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>io.netty</groupId>

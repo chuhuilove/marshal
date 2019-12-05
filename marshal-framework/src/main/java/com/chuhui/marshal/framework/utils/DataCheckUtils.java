@@ -1,6 +1,6 @@
-package com.chuhui.marshal.framework.utils.utils;
+package com.chuhui.marshal.framework.utils;
 
-import com.chuhui.marshal.framework.utils.excaption.MarshalNullPointException;
+import com.chuhui.marshal.framework.exception.MarshalNullPointException;
 
 /**
  * CheckNullUtils

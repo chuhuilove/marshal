@@ -1,4 +1,4 @@
-package com.chuhui.marshal.framework.utils.utils;
+package com.chuhui.marshal.framework.utils;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

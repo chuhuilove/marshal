@@ -32,6 +32,7 @@ public abstract class AbstractAnnotationResolver implements InitializingBean, Ap
     final static private Logger logger = LoggerFactory.getLogger(AbstractAnnotationResolver.class);
 
 
+    protected ApplicationContext context;
     protected AbstractClientContextFactory clientContextFactory;
 
 
@@ -44,7 +45,7 @@ public abstract class AbstractAnnotationResolver implements InitializingBean, Ap
     }
 
 
-    protected <T extends Annotation> T getAnnotatedBeanName(ApplicationContext context, Class<T> clazz) {
+     protected static <T extends Annotation> T getAnnotatedBeanName(ApplicationContext context, Class<T> clazz) {
 
         Map<String, Object> beans = context.getBeansWithAnnotation(clazz);
         if (beans.size() != MAX_ANNOTATED_COUNT) {

@@ -27,7 +27,7 @@ public final class Protocol {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\016Protocol.proto\022%com.chuhui.marshal.fra" +
       "mework.transfer\"R\n\024ClientRequestPackage\022" +
       "\027\n\017requireProducer\030\001 \003(\t\022\014\n\004name\030\002 \001(\t\022\023" +
@@ -51,7 +51,7 @@ public final class Protocol {
     internal_static_com_chuhui_marshal_framework_transfer_ClientRequestPackage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_chuhui_marshal_framework_transfer_ClientRequestPackage_descriptor,
-        new java.lang.String[] { "RequireProducer", "Name", "RequestFlag", });
+        new String[] { "RequireProducer", "Name", "RequestFlag", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

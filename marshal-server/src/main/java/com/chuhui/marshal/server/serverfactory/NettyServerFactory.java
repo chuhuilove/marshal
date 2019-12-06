@@ -1,19 +1,35 @@
 package com.chuhui.marshal.server.serverfactory;
 
-import com.chuhui.marshal.framework.transfer.ClientRequestPackage;
+import com.chuhui.marshal.framework.transfer.TransferObject;
+import com.chuhui.marshal.framework.utils.DataCheckUtils;
 import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import com.chuhui.marshal.server.ServerContextFactory;
+import com.chuhui.marshal.server.servercontext.NettyServerContext;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.util.AttributeKey;
+import io.netty.util.ReferenceCountUtil;
+import io.netty.util.concurrent.DefaultEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * NettyServerFactory
@@ -32,8 +48,21 @@ public class NettyServerFactory extends ServerContextFactory {
 
     private volatile boolean serverStarted;
 
+    private static final AttributeKey<NettyServerContext> CONNECTION_ATTRIBUTE =
+            AttributeKey.valueOf("NettyServerContext");
+
+    private final ChannelGroup allChannels =
+            new DefaultChannelGroup("marshalServerContext", new DefaultEventExecutor());
+
+
+    /**
+     * 存储ip地址和客户端
+     * 这个客户端,可以是生产者,也可以是消费者...
+     */
+    private final Map<InetAddress, Set<NettyServerContext>> ipMap = new HashMap<>();
 
     private ContextChannelHandler serverChannelHandler = new ContextChannelHandler();
+
 
     public NettyServerFactory() {
 
@@ -69,7 +98,6 @@ public class NettyServerFactory extends ServerContextFactory {
         if (!serverStarted) {
             start();
         }
-
     }
 
     @Override
@@ -98,6 +126,11 @@ public class NettyServerFactory extends ServerContextFactory {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             LOG.info("invoked channelActive method...");
+            NettyServerContext context = new NettyServerContext(ctx.channel(), NettyServerFactory.this);
+            ctx.channel().attr(CONNECTION_ATTRIBUTE).set(context);
+            allChannels.add(ctx.channel());
+            addContext(context);
+
         }
 
         @Override
@@ -106,42 +139,34 @@ public class NettyServerFactory extends ServerContextFactory {
         }
 
         @Override
+        public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+            allChannels.remove(ctx.channel());
+            NettyServerContext context = ctx.channel().attr(CONNECTION_ATTRIBUTE).getAndSet(null);
+            if (context != null) {
+                if (LOG.isTraceEnabled()) {
+                    LOG.trace("Channel inactive caused close {}", context);
+                }
+                context.close();
+            }
+        }
+
+        @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-            if(msg instanceof ByteBuf){
-                ByteBuf byteBuf= (ByteBuf) msg;
-                LOG.info(Thread.currentThread().getName()+" invoked channelRead method...read msg:{}", byteBuf.toString(StandardCharsets.UTF_8));
+            try {
 
+                ByteBuf byteBuf = (ByteBuf) msg;
+                NettyServerContext context = ctx.channel().attr(CONNECTION_ATTRIBUTE).get();
 
-                System.err.println("是否直接缓存:"+byteBuf.isDirect());
-                // 堆外内存,会出现的 java.lang.UnsupportedOperationException: direct buffer异常///
+                context.processMessage(byteBuf);
+
+                // 堆外内存,直接调用array()方法,会出现的 java.lang.UnsupportedOperationException: direct buffer异常///
                 //
                 // https://stackoverflow.com/questions/52658774/netty-io-netty-buffer-bytebuf-array-throws-exception-direct-buffer
 
-                byte[] bytes = new byte[byteBuf.readableBytes()];
-                byteBuf.duplicate().readBytes(bytes);
-
-                ClientRequestPackage clientRequestPackage = ClientRequestPackage.parseFrom(bytes);
-
-                LOG.info(clientRequestPackage.toString());
-                LOG.info(clientRequestPackage.toString());
-                LOG.info(clientRequestPackage.toString());
-
+            } finally {
+                ReferenceCountUtil.release(msg);
             }
-
-
-
-
-            String sendMessage = "from server message:" + UUID.randomUUID().toString().replaceAll("-", "");
-            Channel channel = ctx.channel();
-            byte[] sendBytes = sendMessage.getBytes();
-            ByteBuf byteBuf = Unpooled.directBuffer(sendBytes.length, sendBytes.length);
-            byteBuf.writeBytes(sendBytes);
-            channel.writeAndFlush(byteBuf);
-
-            // 设置一个队列，
-
         }
-
 
 
         @Override
@@ -160,6 +185,20 @@ public class NettyServerFactory extends ServerContextFactory {
             Channel channel = ctx.channel();
             channel.close();
             LOG.error("error occurs", cause);
+        }
+    }
+
+    private void addContext(NettyServerContext context) {
+        contexts.add(context);
+        synchronized (ipMap) {
+            InetAddress addr =
+                    ((InetSocketAddress) context.getChannel().remoteAddress()).getAddress();
+            Set<NettyServerContext> s = ipMap.get(addr);
+            if (s == null) {
+                s = new HashSet<>();
+                ipMap.put(addr, s);
+            }
+            s.add(context);
         }
     }
 

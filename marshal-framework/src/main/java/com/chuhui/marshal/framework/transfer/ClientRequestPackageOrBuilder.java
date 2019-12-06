@@ -10,7 +10,7 @@ public interface ClientRequestPackageOrBuilder extends
   /**
    * <code>repeated string requireProducer = 1;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getRequireProducerList();
   /**
    * <code>repeated string requireProducer = 1;</code>
@@ -19,7 +19,7 @@ public interface ClientRequestPackageOrBuilder extends
   /**
    * <code>repeated string requireProducer = 1;</code>
    */
-  java.lang.String getRequireProducer(int index);
+  String getRequireProducer(int index);
   /**
    * <code>repeated string requireProducer = 1;</code>
    */
@@ -29,7 +29,7 @@ public interface ClientRequestPackageOrBuilder extends
   /**
    * <code>string name = 2;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <code>string name = 2;</code>
    */

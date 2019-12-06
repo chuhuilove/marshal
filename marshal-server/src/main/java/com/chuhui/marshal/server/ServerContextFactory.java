@@ -8,11 +8,21 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class ServerContextFactory {
     private static final Logger LOG = LoggerFactory.getLogger(ServerContextFactory.class);
 
+
     static final String MARSHAL_SERVER_CONTEXT_FACTORY = "com.chuhui.marshal.server.netty.NettyServerFactory";
+
+
+
+    protected final Set<ServerContext> contexts = Collections.newSetFromMap(
+            new ConcurrentHashMap<ServerContext, Boolean>());
+
 
     static public ServerContextFactory createContextFactory() throws IOException {
         MarshalConfig globalConfig = MarshalStandaloneMain.getGlobalConfig();

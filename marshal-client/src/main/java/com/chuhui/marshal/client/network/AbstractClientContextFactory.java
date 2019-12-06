@@ -1,5 +1,6 @@
 package com.chuhui.marshal.client.network;
 
+import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
 import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,8 @@ public abstract class AbstractClientContextFactory {
 
     public static AbstractClientContextFactory createClientFactory(String[] serverAddress) {
 
-        if(logger.isDebugEnabled()){
-            logger.debug("use netty as client factory,class is {}",NettyClientContextFactory.class.getName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("use netty as client factory,class is {}", NettyClientContextFactory.class.getName());
         }
 
         NettyClientContextFactory contextFactory = new NettyClientContextFactory(serverAddress);
@@ -39,7 +40,10 @@ public abstract class AbstractClientContextFactory {
     public abstract void sendMessage(String message);
 
     public abstract void sendMessage(Object object);
+
     public abstract void sendMessage(byte[] bytes);
+
+    public abstract void sendMessage(REMOTE_FLAG flag, byte[] bytes);
 
 
 }

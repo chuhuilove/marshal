@@ -2,25 +2,17 @@ package com.chuhui.marshal.client.resolver;
 
 import com.chuhui.marshal.client.AbstractAnnotationResolver;
 import com.chuhui.marshal.client.annotation.EnableMarshalConsumer;
-import com.chuhui.marshal.client.network.AbstractClientContextFactory;
 import com.chuhui.marshal.framework.transfer.ClientRequestPackage;
-import org.apache.commons.collections4.CollectionUtils;
+import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import static com.chuhui.marshal.framework.utils.Constant.MAX_ANNOTATED_COUNT;
-import static com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG.CLIENT_FIRST_REQUEST;
 
 /**
  * ResolveEnableMarshalConsumer
@@ -41,7 +33,6 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
     private String[] requireProducer;
     private String name;
 
-    private ApplicationContext context;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -55,15 +46,12 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
         for (int i = 0; i < requireProducer.length; i++) {
             builder.addRequireProducer(requireProducer[i]);
         }
-        builder.setRequestFlag(CLIENT_FIRST_REQUEST.getValue());
+
         ClientRequestPackage build = builder.build();
 
-
-        clientContextFactory.sendMessage(build.toByteArray());
-
+        clientContextFactory.sendMessage(REMOTE_FLAG.CLIENT_FIRST_REQUEST,build.toByteArray());
 
 // 客户端和服务端分离出来....
-
 
     }
 

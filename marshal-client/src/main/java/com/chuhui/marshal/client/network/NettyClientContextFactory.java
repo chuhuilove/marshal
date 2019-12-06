@@ -1,15 +1,18 @@
 package com.chuhui.marshal.client.network;
 
+import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
 import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
+
+import static com.chuhui.marshal.framework.utils.ServerFactoryUtils.*;
+import static com.chuhui.marshal.framework.utils.ServerFactoryUtils.preHandleByteBuf;
 
 /**
  * NettyClientContextFactory
@@ -87,11 +90,22 @@ public class NettyClientContextFactory extends AbstractClientContextFactory {
         }
     }
 
+
+    @Deprecated
     @Override
     public void sendMessage(byte[] bytes) {
         Channel channel = future.channel();
-        ByteBuf byteBuf = Unpooled.directBuffer();
+
+        ByteBuf byteBuf = preHandleByteBuf(bytes.length);
         byteBuf.writeBytes(bytes);
+        channel.writeAndFlush(byteBuf);
+    }
+
+    @Override
+    public void sendMessage(REMOTE_FLAG flag, byte[] bodyBytes) {
+        ByteBuf byteBuf = preHandleByteBuf(flag, bodyBytes.length);
+        byteBuf.writeBytes(bodyBytes);
+        Channel channel = future.channel();
         channel.writeAndFlush(byteBuf);
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2019/12/5 0005
  * @Description:TODO
  */
-@Component
+
 public class BeanFactoryHandler implements BeanFactoryPostProcessor {
 
     final static private Logger logger = LoggerFactory.getLogger(BeanFactoryHandler.class);

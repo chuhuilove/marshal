@@ -1,5 +1,7 @@
 package com.chuhui.marshal.framework.utils;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
@@ -11,10 +13,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.commons.lang3.ArrayUtils;
+import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -23,8 +27,6 @@ import java.util.stream.Collectors;
 
 /**
  * ServerFactoryUtils
- * <p>
- * //TODO description
  *
  * @author: 纯阳子
  * @date: 2019/12/1
@@ -89,8 +91,52 @@ public class ServerFactoryUtils {
         };
 
         return Arrays.stream(address).map(function).collect(Collectors.toList());
-
     }
+
+    public static final String TRANSFER_HEADER = "cyzi";
+    public static final byte[] TRANSFER_HEADER_BYTES = TRANSFER_HEADER.getBytes();
+    public static final int HEADER_LENGTH = TRANSFER_HEADER_BYTES.length;
+    public static final int INTEGER_LENGTH = 4;
+    public static final int SHORT_LENGTH = 2;
+
+    /**
+     * 这里定义着传输协议
+     * 前4个字节,是字符串{@code TRANSFER_HEADER}
+     * 下面4个子节,是一个int型数字,表示整个包有多长,
+     * 最后面n个字节,是具体的请求长度
+     *
+     * @param dataBodyLength
+     * @return
+     */
+    @Deprecated
+    public static ByteBuf preHandleByteBuf(int dataBodyLength) {
+        ByteBuf byteBuf = Unpooled.directBuffer();
+        byteBuf.writeBytes(TRANSFER_HEADER_BYTES);
+        byteBuf.writeInt(INTEGER_LENGTH + HEADER_LENGTH + dataBodyLength);
+
+        return byteBuf;
+    }
+
+    /**
+     * 传输协议
+     * |------------请求头占用10个字节-----------|
+     * 0----------3-------------7--------------9-----------n
+     *  cyzi(cyzi)  包总长度(int) 请求标志(short)   请求体
+     * @param flag 请求标志
+     * @param dataBodyLength 请求体的长度
+     * @return 添加了请求头的预置{@code ByteBuf}对象
+     */
+    public static ByteBuf preHandleByteBuf(REMOTE_FLAG flag, int dataBodyLength) {
+        ByteBuf byteBuf = Unpooled.directBuffer();
+        byteBuf.writeBytes(TRANSFER_HEADER_BYTES);
+
+        byteBuf.writeInt(HEADER_LENGTH+INTEGER_LENGTH +SHORT_LENGTH+  + dataBodyLength);
+        byteBuf.writeShort(flag.value);
+        return byteBuf;
+    }
+
+
+
 
 
 }

@@ -15,6 +15,12 @@ public interface Constant {
     Integer MAX_ANNOTATED_COUNT = 1;
 
 
+    String REQUEST_MAPPING_PATH_METHOD_NAME = "path";
+    String REQUEST_MAPPING_VALUE_METHOD_NAME = "value";
+    String SPRING_FRAMEWORK_CONTROLLER_PREFIX="org.springframework.";
+
+
+
     enum REMOTE_FLAG {
         /**
          * 客户端第一次请求,请求服务端,以证明需要的服务是否存在

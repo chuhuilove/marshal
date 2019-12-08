@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * OrderController
@@ -15,9 +16,10 @@ import java.util.List;
  * @date: 2019/12/3
  */
 @RestController
+@RequestMapping({"orderMain", "orderPower"})
 public class OrderController {
 
-    @GetMapping("/orderService/{userName}")
+    @GetMapping(path = {"/orderService/{userName}", "/orderPowerService/{userName}"})
     public List<UserOrderModel> orderService(@PathVariable String userName) {
         List<UserOrderModel> models = new ArrayList<>();
         models.add(modelGenerator(userName, 0));
@@ -37,10 +39,19 @@ public class OrderController {
     }
 
     @PostMapping(value = "/postRequest")
-    public int testPostRequest(@RequestBody UserOrderModel model){
+    public int testPostRequest(@RequestBody UserOrderModel model) {
         System.err.println("has invoked....testPostRequest method");
         return model.hashCode();
+    }
 
+    @RequestMapping(value = {"testMuiltMethod", "testMuiltMethod", "newMuiltMethod"}, method = {RequestMethod.POST, RequestMethod.GET})
+    public String gettest() {
+        return UUID.randomUUID().toString();
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET, RequestMethod.GET, RequestMethod.PUT})
+    public String gettestNullPath() {
+        return "null path:" + UUID.randomUUID().toString();
     }
 
 

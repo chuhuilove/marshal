@@ -31,6 +31,14 @@ public class TestCustomeController {
     }
 
 
+    @RequestMapping()
+    public String getTestNull(){
+        return "nullGetMapping"+UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+
+
+
     public static void main(String[] args) {
 
         try {

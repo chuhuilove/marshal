@@ -45,5 +45,10 @@ public @interface EnableMarshalProducer {
      */
     String selfAddress();
 
+    /**
+     * 是否将Spring Framework所提供的controller也注册到服务端
+     * @return
+     */
+    boolean register() default false;
 
 }

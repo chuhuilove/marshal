@@ -15,11 +15,14 @@
         <module>example-server</module>
         <module>example-client</module>
         <module>example-client-server</module>
+        <module>example-springmvc-without-webxml</module>
+        <!--<module>example-springmvc-without-webxml</module>-->
     </modules>
 
     <properties>
         <lombok.version>1.18.8</lombok.version>
         <spring-boot.version>2.1.9.RELEASE.cyzi</spring-boot.version>
+        <javax-servlet.version>4.0.1.cyzi</javax-servlet.version>
     </properties>
 
 

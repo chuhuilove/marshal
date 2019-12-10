@@ -1,6 +1,6 @@
 package com.chuhui.marshal.framework.transfer;
 
-import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
+import com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +17,7 @@ public class TransferObject {
 
     private String requestHeader;
     private Integer sumLength;
-    private REMOTE_FLAG flag;
+    private CLIENT_REMOTE_REQUEST_FLAG flag;
     private byte[] dataBody;
-
-
 
 }

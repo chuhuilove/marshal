@@ -1,16 +1,25 @@
 package com.chuhui.marshal.server.servercontext;
 
-import com.chuhui.marshal.framework.transfer.ClientRequestPackage;
 import com.chuhui.marshal.framework.transfer.TransferObject;
+import com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage;
+import com.chuhui.marshal.framework.transfer.google.ProducerRequestPackage;
 import com.chuhui.marshal.framework.utils.DataCheckUtils;
 import com.chuhui.marshal.server.ServerContext;
 import com.chuhui.marshal.server.serverfactory.NettyServerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG.CONSUMER_FIRST_REQUEST;
+import static com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG.PRODUCER_FIRST_REQUEST;
 
 /**
  * NettyServerContext
@@ -59,10 +68,13 @@ public class NettyServerContext extends ServerContext {
 
         switch (transferObject.getFlag()) {
 
-            case CLIENT_FIRST_REQUEST:
-                ClientRequestPackage clientRequestPackage = ClientRequestPackage.parseFrom(transferObject.getDataBody());
-                clientFirstRequest(clientRequestPackage);
+            case CONSUMER_FIRST_REQUEST:
+                ConsumerRequestPackage clientRequestPackage = ConsumerRequestPackage.parseFrom(transferObject.getDataBody());
+                customerFirstRequest(clientRequestPackage);
                 break;
+            case PRODUCER_FIRST_REQUEST:
+                ProducerRequestPackage requestPackage = ProducerRequestPackage.parseFrom(transferObject.getDataBody());
+                producerFirstRequest(requestPackage);
             default:
                 break;
 
@@ -72,7 +84,7 @@ public class NettyServerContext extends ServerContext {
 
 
     @Override
-    protected void clientFirstRequest(ClientRequestPackage requestPackage) {
+    protected void customerFirstRequest(ConsumerRequestPackage requestPackage) {
 
         String name = requestPackage.getName();
 
@@ -81,8 +93,28 @@ public class NettyServerContext extends ServerContext {
         logger.error("name is {}", name);
 
         for (int i = 0; i < requireProducerCount; i++) {
-            logger.error("requireProducer[{}] is {}", i, requestPackage.getRequireProducer(i));
+            String requireProducer = requestPackage.getRequireProducer(i);
+            List<ProducerRequestPackage> producerRequestPackages = PRODUCER_SERVICES.get(requireProducer);
+
+            if(CollectionUtils.isEmpty(producerRequestPackages)){
+                logger.error("customer need package {} not found",requireProducer);
+            }else{
+                logger.error("customer need package {} found,has server size:{}",requireProducer,producerRequestPackages.size());
+            }
         }
+    }
+
+    @Override
+    protected void producerFirstRequest(ProducerRequestPackage requestPackage) {
+
+        List<ProducerRequestPackage> services = PRODUCER_SERVICES.get(requestPackage.getServerGroup());
+
+        if (CollectionUtils.isEmpty(services)) {
+            services = Collections.synchronizedList(new ArrayList<>());
+            PRODUCER_SERVICES.put(requestPackage.getServerGroup(), services);
+        }
+        services.add(requestPackage);
+
 
 
     }

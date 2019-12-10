@@ -16,6 +16,7 @@
         <module>example-client</module>
         <module>example-client-server</module>
         <module>example-springmvc-without-webxml</module>
+        <module>example-server-2</module>
         <!--<module>example-springmvc-without-webxml</module>-->
     </modules>
 

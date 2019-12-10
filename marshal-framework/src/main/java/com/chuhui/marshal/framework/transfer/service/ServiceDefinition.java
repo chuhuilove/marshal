@@ -1,4 +1,4 @@
-package com.chuhui.marshal.framework.transfer;
+package com.chuhui.marshal.framework.transfer.service;
 
 import lombok.Getter;
 import lombok.Setter;

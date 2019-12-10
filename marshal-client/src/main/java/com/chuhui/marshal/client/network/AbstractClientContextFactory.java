@@ -1,6 +1,6 @@
 package com.chuhui.marshal.client.network;
 
-import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
+import com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG;
 import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public abstract class AbstractClientContextFactory {
 
     public abstract void sendMessage(byte[] bytes);
 
-    public abstract void sendMessage(REMOTE_FLAG flag, byte[] bytes);
+    public abstract void sendMessage(CLIENT_REMOTE_REQUEST_FLAG flag, byte[] bytes);
 
 
 }

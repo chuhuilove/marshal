@@ -1,6 +1,6 @@
 package com.chuhui.marshal.client.network;
 
-import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
+import com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG;
 import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
 
-import static com.chuhui.marshal.framework.utils.ServerFactoryUtils.*;
 import static com.chuhui.marshal.framework.utils.ServerFactoryUtils.preHandleByteBuf;
 
 /**
@@ -102,10 +101,14 @@ public class NettyClientContextFactory extends AbstractClientContextFactory {
     }
 
     @Override
-    public void sendMessage(REMOTE_FLAG flag, byte[] bodyBytes) {
+    public void sendMessage(CLIENT_REMOTE_REQUEST_FLAG flag, byte[] bodyBytes) {
+        // 传进来一个2937的byte[]数组
+        // 在
         ByteBuf byteBuf = preHandleByteBuf(flag, bodyBytes.length);
         byteBuf.writeBytes(bodyBytes);
         Channel channel = future.channel();
+        // 服务端只收到1024个字节...???
+        // 这是为什么原因呢?
         channel.writeAndFlush(byteBuf);
     }
 }

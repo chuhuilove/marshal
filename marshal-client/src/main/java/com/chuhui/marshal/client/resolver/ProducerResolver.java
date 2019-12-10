@@ -2,7 +2,10 @@ package com.chuhui.marshal.client.resolver;
 
 import com.chuhui.marshal.client.AbstractAnnotationResolver;
 import com.chuhui.marshal.client.annotation.EnableMarshalProducer;
-import com.chuhui.marshal.framework.transfer.ServiceDefinition;
+import com.chuhui.marshal.framework.transfer.google.ProducerRequestPackage;
+import com.chuhui.marshal.framework.transfer.google.ServiceDefinitionPackage;
+import com.chuhui.marshal.framework.transfer.service.ServiceDefinition;
+import com.chuhui.marshal.framework.transfer.service.UrlServiceDefinition;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -15,13 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static com.chuhui.marshal.client.utils.ResolveRequestMapping.parseRequestMapping;
-import static com.chuhui.marshal.framework.utils.Constant.SPRING_FRAMEWORK_CONTROLLER_PREFIX;
+import static com.chuhui.marshal.client.resolver.ResolveRequestMapping.disintegrateServiceDefinition;
+import static com.chuhui.marshal.client.resolver.ResolveRequestMapping.parseRequestMapping;
+import static com.chuhui.marshal.framework.utils.Constant.*;
+import static com.chuhui.marshal.framework.utils.DataCheckUtils.arrayDeduplication;
 
 /**
  * ResolveEnableMarshalProducer
@@ -29,6 +31,9 @@ import static com.chuhui.marshal.framework.utils.Constant.SPRING_FRAMEWORK_CONTR
  * <p>
  * 生产者解析器
  * 启用基于全注解的风格...
+ *
+ * <p>
+ * 需要解析的注解,有如下几种.
  *
  * @author: cyzi
  * @Date: 2019/12/4 0004
@@ -42,16 +47,35 @@ public class ProducerResolver extends AbstractAnnotationResolver {
     @Override
     public void afterPropertiesSet() throws Exception {
 
-
         List<ServiceDefinition> definitions = resolveController();
 
-        // 已经获取到所有带有RequestMapping的方法了...
-        // todo 2019年12月9日00:05:16
-        // todo 将ServiceDefinition 中的mainPath,methodPath进行组合.
+        List<UrlServiceDefinition> serviceDefinitions = disintegrateServiceDefinition(definitions);
 
+        startRemoteClient(marshalServer);
+        ProducerRequestPackage requestPackage = buildRegisterPackage(serviceDefinitions);
+        clientContextFactory.sendMessage(CLIENT_REMOTE_REQUEST_FLAG.PRODUCER_FIRST_REQUEST, requestPackage.toByteArray());
 
+    }
 
-//        startRemoteClient(marshalServer);
+    private ProducerRequestPackage buildRegisterPackage(List<UrlServiceDefinition> serviceDefinitions) {
+        final ProducerRequestPackage.Builder builder = ProducerRequestPackage.newBuilder()
+                .setSelfAddress(selfAddress)
+                .setServerGroup(group)
+                .setServerName(value);
+
+        serviceDefinitions.forEach(e -> {
+            ServiceDefinitionPackage build = ServiceDefinitionPackage.newBuilder()
+                    .setClassName(e.getClassName())
+                    .setMethodName(e.getMethodName())
+                    .setServiceUrl(e.getServiceUrl())
+                    .setServiceRequestAnnotation(e.getServiceRequestAnnotation())
+                    .addAllRequestMethod(Arrays.asList(e.getRequestMethod()))
+                    .build();
+
+            builder.addDefinitions(build);
+        });
+
+        return builder.build();
     }
 
     private List<ServiceDefinition> resolveController() {
@@ -65,11 +89,8 @@ public class ProducerResolver extends AbstractAnnotationResolver {
          * 根据逻辑,我们不认为这个类应该被我们解析
          * 但是我们提供了一个属性,来进行全局设置,
          *
-         *
          */
         Map<String, Object> coreBeans = context.getBeansWithAnnotation(Controller.class);
-
-
 
         // 服务所在组 group+一级RequestMapping+二级RequestMapping
 
@@ -112,21 +133,24 @@ public class ProducerResolver extends AbstractAnnotationResolver {
                 }
             }
         }
-
-
     }
 
-
+    /**
+     * 解析Class上的RequestMapping注解
+     *
+     * @param requestMapping
+     * @return
+     */
     private static String[] requestMappingPath(RequestMapping requestMapping) {
         if (requestMapping == null) {
-            return new String[]{"/"};
+            return new String[]{URL_DELIMITER};
         } else {
             String[] path = requestMapping.path();
             if (ArrayUtils.isNotEmpty(path)) {
-                return path;
+                return arrayDeduplication(path);
             } else {
                 String[] value = requestMapping.value();
-                return ArrayUtils.isNotEmpty(value) ? value : null;
+                return ArrayUtils.isNotEmpty(value) ? arrayDeduplication(value) : new String[]{URL_DELIMITER};
             }
         }
     }
@@ -143,6 +167,13 @@ public class ProducerResolver extends AbstractAnnotationResolver {
         EnableMarshalProducer annotatedBeanName = getAnnotatedBeanName(applicationContext, EnableMarshalProducer.class);
 
         group = annotatedBeanName.group();
+
+        if(!group.startsWith(URL_DELIMITER)){
+            group=URL_DELIMITER+group;
+        }
+        if(!group.endsWith(URL_DELIMITER)){
+            group=group+URL_DELIMITER;
+        }
         marshalServer = annotatedBeanName.marshalServer();
         selfAddress = annotatedBeanName.selfAddress();
         value = annotatedBeanName.value();

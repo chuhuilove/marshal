@@ -1,0 +1,5 @@
+server:
+  port: 9633
+  servlet:
+    context-path: /example-server
+

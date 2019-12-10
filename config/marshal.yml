@@ -6,5 +6,7 @@ marshalBasic:
 
 serverFactory: com.chuhui.marshal.server.serverfactory.NettyServerFactory
 
+#marshal服务端允许接收请求包的最大长度
+rcvbufAllocatorSize: 65536
 
 

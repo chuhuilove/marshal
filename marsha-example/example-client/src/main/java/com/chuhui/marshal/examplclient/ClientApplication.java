@@ -14,14 +14,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableMarshalConsumer(name = "consumer-1",
-        requireProducer = {"orderServer","powerServer","mainServer"},
+        requireProducer = {"example-server","example-OrderServer"},
         marshalServer = {"127.0.0.1:1125","127.0.0.1:1126"})
 public class ClientApplication {
 
     public static void main(String[] args) {
 
         SpringApplication application = new SpringApplication(ClientApplication.class);
-
         application.run(args);
     }
 }

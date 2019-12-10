@@ -13,15 +13,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.commons.lang3.ArrayUtils;
-import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
+import com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -126,7 +123,7 @@ public class ServerFactoryUtils {
      * @param dataBodyLength 请求体的长度
      * @return 添加了请求头的预置{@code ByteBuf}对象
      */
-    public static ByteBuf preHandleByteBuf(REMOTE_FLAG flag, int dataBodyLength) {
+    public static ByteBuf preHandleByteBuf(CLIENT_REMOTE_REQUEST_FLAG flag, int dataBodyLength) {
         ByteBuf byteBuf = Unpooled.directBuffer();
         byteBuf.writeBytes(TRANSFER_HEADER_BYTES);
 

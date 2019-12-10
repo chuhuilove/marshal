@@ -1,20 +1,13 @@
 package com.chuhui.marshal.server.serverfactory;
 
-import com.chuhui.marshal.framework.transfer.TransferObject;
-import com.chuhui.marshal.framework.utils.DataCheckUtils;
+import com.chuhui.marshal.MarshalStandaloneMain;
+import com.chuhui.marshal.framework.config.MarshalConfig;
 import com.chuhui.marshal.framework.utils.ServerFactoryUtils;
 import com.chuhui.marshal.server.ServerContextFactory;
 import com.chuhui.marshal.server.servercontext.NettyServerContext;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelDuplexHandler;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -70,6 +63,11 @@ public class NettyServerFactory extends ServerContextFactory {
 
         EventLoopGroup workerGroup = ServerFactoryUtils.getNioOrEpollGroup();
 
+
+        // 配置文件的问题,需要进一步的细化...
+        // 这种方式,对于以后的集群模式而言.有很大的弊端
+        MarshalConfig globalConfig = MarshalStandaloneMain.getGlobalConfig();
+
         serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(bossGroup, workerGroup)
                 .channel(ServerFactoryUtils.getNioOrEpollChannel())
@@ -78,6 +76,8 @@ public class NettyServerFactory extends ServerContextFactory {
                 // child channels options
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childOption(ChannelOption.SO_LINGER, -1)
+
+                .childOption(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(globalConfig.getRcvbufAllocatorSize()))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {

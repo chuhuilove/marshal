@@ -2,8 +2,8 @@ package com.chuhui.marshal.client.resolver;
 
 import com.chuhui.marshal.client.AbstractAnnotationResolver;
 import com.chuhui.marshal.client.annotation.EnableMarshalConsumer;
-import com.chuhui.marshal.framework.transfer.ClientRequestPackage;
-import com.chuhui.marshal.framework.utils.Constant.REMOTE_FLAG;
+import com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage;
+import com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -40,19 +40,15 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
         startRemoteClient(marshalServer);
 
 
-        ClientRequestPackage.Builder builder = ClientRequestPackage.newBuilder()
+        ConsumerRequestPackage.Builder builder = ConsumerRequestPackage.newBuilder()
                 .setName(name);
 
         for (int i = 0; i < requireProducer.length; i++) {
             builder.addRequireProducer(requireProducer[i]);
         }
 
-        ClientRequestPackage build = builder.build();
-
-        clientContextFactory.sendMessage(REMOTE_FLAG.CLIENT_FIRST_REQUEST,build.toByteArray());
-
-// 客户端和服务端分离出来....
-
+        ConsumerRequestPackage build = builder.build();
+        clientContextFactory.sendMessage(CLIENT_REMOTE_REQUEST_FLAG.CONSUMER_FIRST_REQUEST,build.toByteArray());
     }
 
     @Override
@@ -64,4 +60,7 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
         name = consumer.name();
         context = applicationContext;
     }
+
+
+
 }

@@ -8,18 +8,33 @@
 
 // [START declaration]
 syntax = "proto3";
-package com.chuhui.marshal.framework.transfer;
+package com.chuhui.marshal.framework.transfer.google;
 
 // [END declaration]
 
 // [START java_declaration]
-option java_package = "com.chuhui.marshal.framework.transfer";
+option java_package = "com.chuhui.marshal.framework.transfer.google";
 option java_multiple_files = true;
 
-message ClientRequestPackage {
+message ConsumerRequestPackage {
     repeated string requireProducer=1;
     string name = 2;
-    int32 requestFlag=3;
 }
+
+message ProducerRequestPackage{
+    string serverGroup=1;
+    string selfAddress=2;
+    string serverName=3;
+    repeated ServiceDefinitionPackage definitions=4;
+}
+
+message ServiceDefinitionPackage{
+    string   methodName=1;
+    repeated string requestMethod=2;
+    string className=3;
+    string  serviceRequestAnnotation=4;
+    string serviceUrl=5;
+}
+
 
 

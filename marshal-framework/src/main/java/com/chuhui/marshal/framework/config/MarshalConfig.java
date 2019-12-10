@@ -30,6 +30,10 @@ public class MarshalConfig {
      */
     private String serverFactory;
 
+    /**
+     * marshal服务端允许接收请求包的最大长度
+     */
+    private Integer rcvbufAllocatorSize;
 
     public static MarshalConfig readConfigFromFile(String configFileName) {
         InputStream fileStream = openFileAsInputStream(configFileName);

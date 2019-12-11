@@ -4,19 +4,20 @@
 package com.chuhui.marshal.framework.transfer.google;
 
 /**
- * Protobuf type {@code com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage}
+ * Protobuf type {@code com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage}
  */
-public  final class ConsumerRequestPackage extends
+public  final class SearchServiceRequestPackage extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage)
-    ConsumerRequestPackageOrBuilder {
+    // @@protoc_insertion_point(message_implements:com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage)
+    SearchServiceRequestPackageOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use ConsumerRequestPackage.newBuilder() to construct.
-  private ConsumerRequestPackage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use SearchServiceRequestPackage.newBuilder() to construct.
+  private SearchServiceRequestPackage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private ConsumerRequestPackage() {
-    name_ = "";
+  private SearchServiceRequestPackage() {
+    group_ = "";
+    serviceUrl_ = "";
   }
 
   @java.lang.Override
@@ -24,7 +25,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private ConsumerRequestPackage(
+  private SearchServiceRequestPackage(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -46,7 +47,13 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            name_ = s;
+            group_ = s;
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            serviceUrl_ = s;
             break;
           }
           default: {
@@ -70,45 +77,79 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_ConsumerRequestPackage_descriptor;
+    return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_SearchServiceRequestPackage_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_ConsumerRequestPackage_fieldAccessorTable
+    return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_SearchServiceRequestPackage_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.class, com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.Builder.class);
+            com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.class, com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.Builder.class);
   }
 
-  public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+  public static final int GROUP_FIELD_NUMBER = 1;
+  private volatile java.lang.Object group_;
   /**
-   * <code>string name = 1;</code>
+   * <code>string group = 1;</code>
    */
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
+  public java.lang.String getGroup() {
+    java.lang.Object ref = group_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      name_ = s;
+      group_ = s;
       return s;
     }
   }
   /**
-   * <code>string name = 1;</code>
+   * <code>string group = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getNameBytes() {
-    java.lang.Object ref = name_;
+      getGroupBytes() {
+    java.lang.Object ref = group_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      name_ = b;
+      group_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SERVICEURL_FIELD_NUMBER = 2;
+  private volatile java.lang.Object serviceUrl_;
+  /**
+   * <code>string serviceUrl = 2;</code>
+   */
+  public java.lang.String getServiceUrl() {
+    java.lang.Object ref = serviceUrl_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      serviceUrl_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string serviceUrl = 2;</code>
+   */
+  public com.google.protobuf.ByteString
+      getServiceUrlBytes() {
+    java.lang.Object ref = serviceUrl_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      serviceUrl_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -129,8 +170,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
+    if (!getGroupBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, group_);
+    }
+    if (!getServiceUrlBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, serviceUrl_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +185,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+    if (!getGroupBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, group_);
+    }
+    if (!getServiceUrlBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, serviceUrl_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -154,13 +201,15 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage)) {
+    if (!(obj instanceof com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage)) {
       return super.equals(obj);
     }
-    com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage other = (com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage) obj;
+    com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage other = (com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage) obj;
 
-    if (!getName()
-        .equals(other.getName())) return false;
+    if (!getGroup()
+        .equals(other.getGroup())) return false;
+    if (!getServiceUrl()
+        .equals(other.getServiceUrl())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -172,76 +221,78 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
+    hash = (37 * hash) + GROUP_FIELD_NUMBER;
+    hash = (53 * hash) + getGroup().hashCode();
+    hash = (37 * hash) + SERVICEURL_FIELD_NUMBER;
+    hash = (53 * hash) + getServiceUrl().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(byte[] data)
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(java.io.InputStream input)
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseDelimitedFrom(java.io.InputStream input)
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseDelimitedFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parseFrom(
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -254,7 +305,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage prototype) {
+  public static Builder newBuilder(com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -270,26 +321,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage}
+   * Protobuf type {@code com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage)
-      com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackageOrBuilder {
+      // @@protoc_insertion_point(builder_implements:com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage)
+      com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackageOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_ConsumerRequestPackage_descriptor;
+      return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_SearchServiceRequestPackage_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_ConsumerRequestPackage_fieldAccessorTable
+      return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_SearchServiceRequestPackage_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.class, com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.Builder.class);
+              com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.class, com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.Builder.class);
     }
 
-    // Construct using com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.newBuilder()
+    // Construct using com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -307,7 +358,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      name_ = "";
+      group_ = "";
+
+      serviceUrl_ = "";
 
       return this;
     }
@@ -315,17 +368,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_ConsumerRequestPackage_descriptor;
+      return com.chuhui.marshal.framework.transfer.google.Protocol.internal_static_com_chuhui_marshal_framework_transfer_google_SearchServiceRequestPackage_descriptor;
     }
 
     @java.lang.Override
-    public com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage getDefaultInstanceForType() {
-      return com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.getDefaultInstance();
+    public com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage getDefaultInstanceForType() {
+      return com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage build() {
-      com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage result = buildPartial();
+    public com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage build() {
+      com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -333,9 +386,10 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage buildPartial() {
-      com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage result = new com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage(this);
-      result.name_ = name_;
+    public com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage buildPartial() {
+      com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage result = new com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage(this);
+      result.group_ = group_;
+      result.serviceUrl_ = serviceUrl_;
       onBuilt();
       return result;
     }
@@ -374,18 +428,22 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage) {
-        return mergeFrom((com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage)other);
+      if (other instanceof com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage) {
+        return mergeFrom((com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage other) {
-      if (other == com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
+    public Builder mergeFrom(com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage other) {
+      if (other == com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage.getDefaultInstance()) return this;
+      if (!other.getGroup().isEmpty()) {
+        group_ = other.group_;
+        onChanged();
+      }
+      if (!other.getServiceUrl().isEmpty()) {
+        serviceUrl_ = other.serviceUrl_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -403,11 +461,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage parsedMessage = null;
+      com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage) e.getUnfinishedMessage();
+        parsedMessage = (com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -417,71 +475,140 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object name_ = "";
+    private java.lang.Object group_ = "";
     /**
-     * <code>string name = 1;</code>
+     * <code>string group = 1;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
+    public java.lang.String getGroup() {
+      java.lang.Object ref = group_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        name_ = s;
+        group_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string group = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
+        getGroupBytes() {
+      java.lang.Object ref = group_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        name_ = b;
+        group_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string group = 1;</code>
      */
-    public Builder setName(
+    public Builder setGroup(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      name_ = value;
+      group_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string group = 1;</code>
      */
-    public Builder clearName() {
+    public Builder clearGroup() {
       
-      name_ = getDefaultInstance().getName();
+      group_ = getDefaultInstance().getGroup();
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string group = 1;</code>
      */
-    public Builder setNameBytes(
+    public Builder setGroupBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      name_ = value;
+      group_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object serviceUrl_ = "";
+    /**
+     * <code>string serviceUrl = 2;</code>
+     */
+    public java.lang.String getServiceUrl() {
+      java.lang.Object ref = serviceUrl_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        serviceUrl_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string serviceUrl = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getServiceUrlBytes() {
+      java.lang.Object ref = serviceUrl_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serviceUrl_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string serviceUrl = 2;</code>
+     */
+    public Builder setServiceUrl(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      serviceUrl_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string serviceUrl = 2;</code>
+     */
+    public Builder clearServiceUrl() {
+      
+      serviceUrl_ = getDefaultInstance().getServiceUrl();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string serviceUrl = 2;</code>
+     */
+    public Builder setServiceUrlBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      serviceUrl_ = value;
       onChanged();
       return this;
     }
@@ -498,41 +625,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage)
+    // @@protoc_insertion_point(builder_scope:com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage)
   }
 
-  // @@protoc_insertion_point(class_scope:com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage)
-  private static final com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage)
+  private static final com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage();
+    DEFAULT_INSTANCE = new com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage();
   }
 
-  public static com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage getDefaultInstance() {
+  public static com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ConsumerRequestPackage>
-      PARSER = new com.google.protobuf.AbstractParser<ConsumerRequestPackage>() {
+  private static final com.google.protobuf.Parser<SearchServiceRequestPackage>
+      PARSER = new com.google.protobuf.AbstractParser<SearchServiceRequestPackage>() {
     @java.lang.Override
-    public ConsumerRequestPackage parsePartialFrom(
+    public SearchServiceRequestPackage parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new ConsumerRequestPackage(input, extensionRegistry);
+      return new SearchServiceRequestPackage(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<ConsumerRequestPackage> parser() {
+  public static com.google.protobuf.Parser<SearchServiceRequestPackage> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<ConsumerRequestPackage> getParserForType() {
+  public com.google.protobuf.Parser<SearchServiceRequestPackage> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage getDefaultInstanceForType() {
+  public com.chuhui.marshal.framework.transfer.google.SearchServiceRequestPackage getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

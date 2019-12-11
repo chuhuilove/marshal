@@ -28,7 +28,9 @@ public @interface EnableMarshalProducer {
     String value();
 
     /**
-     * 生产者所在的组
+     * 生产者所在的组,
+     * 和项目的路径名一致,即server.Servlet.context-path的路径一致
+     *
      * @return 微服务组
      */
     String group();

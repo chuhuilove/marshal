@@ -18,16 +18,15 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class UserController {
 
-
-
     @Autowired
     private MarshalClientCaller serviceCaller;
 
-    @GetMapping("/userOrder/{userName}")
+    private static final String EXAMPLE_SERVER_GROUP="example-server";
 
+    @GetMapping("/userOrder/{userName}")
     public void getUserOrder(@PathVariable String userName) {
 
-        serviceCaller.get("example-server/orderService/",userName,String.class);
+        serviceCaller.get(EXAMPLE_SERVER_GROUP,"/orderMain/orderService/",userName,String.class);
 
 //        String str = template.getForObject("http://127.0.0.1:9632/example-server/orderServiceOne/" + userName, String.class);
 //        System.err.println(str);

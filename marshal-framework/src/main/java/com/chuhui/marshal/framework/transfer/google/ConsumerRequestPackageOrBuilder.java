@@ -8,30 +8,11 @@ public interface ConsumerRequestPackageOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>repeated string requireProducer = 1;</code>
-   */
-  java.util.List<java.lang.String>
-      getRequireProducerList();
-  /**
-   * <code>repeated string requireProducer = 1;</code>
-   */
-  int getRequireProducerCount();
-  /**
-   * <code>repeated string requireProducer = 1;</code>
-   */
-  java.lang.String getRequireProducer(int index);
-  /**
-   * <code>repeated string requireProducer = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getRequireProducerBytes(int index);
-
-  /**
-   * <code>string name = 2;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
-   * <code>string name = 2;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();

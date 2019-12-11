@@ -17,8 +17,12 @@ option java_package = "com.chuhui.marshal.framework.transfer.google";
 option java_multiple_files = true;
 
 message ConsumerRequestPackage {
-    repeated string requireProducer=1;
-    string name = 2;
+    string name = 1;
+}
+
+message SearchServiceRequestPackage{
+    string group=1;
+    string serviceUrl=2;
 }
 
 message ProducerRequestPackage{
@@ -34,6 +38,7 @@ message ServiceDefinitionPackage{
     string className=3;
     string  serviceRequestAnnotation=4;
     string serviceUrl=5;
+    string serviceName=6;
 }
 
 

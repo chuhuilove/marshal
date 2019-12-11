@@ -14,7 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableMarshalConsumer(name = "consumer-1",
-        requireProducer = {"example-server","example-OrderServer"},
+        // 这个东西的目的,是为了服务粒度更细一点
+        // 但是实际结果上,这个东西感觉很鸡肋
         marshalServer = {"127.0.0.1:1125","127.0.0.1:1126"})
 public class ClientApplication {
 

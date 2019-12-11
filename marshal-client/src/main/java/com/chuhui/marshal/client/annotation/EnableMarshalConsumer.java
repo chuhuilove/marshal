@@ -30,20 +30,11 @@ public @interface EnableMarshalConsumer {
      */
     String name();
 
-
-    /**
-     * 消费者需要的生产者
-     *
-     * @return
-     */
-    String[] requireProducer();
-
     /**
      * marshal 服务器地址.
      *
      * @return
      */
     String[] marshalServer();
-
 
 }

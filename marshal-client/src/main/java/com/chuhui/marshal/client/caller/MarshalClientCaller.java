@@ -15,7 +15,7 @@ public interface MarshalClientCaller {
     //post 请求
     //get 请求
 
-    <T> T get(String serviceName, Object param, Type clazz);
+    <T> T get(String group,String serviceName, Object param, Type clazz);
 
 
 

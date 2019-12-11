@@ -85,23 +85,8 @@ public class NettyServerContext extends ServerContext {
 
     @Override
     protected void customerFirstRequest(ConsumerRequestPackage requestPackage) {
-
         String name = requestPackage.getName();
-
-        int requireProducerCount = requestPackage.getRequireProducerCount();
-
-        logger.error("name is {}", name);
-
-        for (int i = 0; i < requireProducerCount; i++) {
-            String requireProducer = requestPackage.getRequireProducer(i);
-            List<ProducerRequestPackage> producerRequestPackages = PRODUCER_SERVICES.get(requireProducer);
-
-            if(CollectionUtils.isEmpty(producerRequestPackages)){
-                logger.error("customer need package {} not found",requireProducer);
-            }else{
-                logger.error("customer need package {} found,has server size:{}",requireProducer,producerRequestPackages.size());
-            }
-        }
+        logger.error("customer name is:{}",name);
     }
 
     @Override
@@ -115,6 +100,8 @@ public class NettyServerContext extends ServerContext {
         }
         services.add(requestPackage);
         System.err.println(requestPackage.toString());
+
+
     }
 
     @Override

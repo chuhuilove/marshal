@@ -11,6 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -47,6 +48,8 @@ public class ProducerResolver extends AbstractAnnotationResolver {
     @Override
     public void afterPropertiesSet() throws Exception {
 
+        //生产者端,数据组织的真的不好
+        // 下面挂着N多个
         List<ServiceDefinition> definitions = resolveController();
 
         List<UrlServiceDefinition> serviceDefinitions = disintegrateServiceDefinition(definitions);
@@ -176,6 +179,13 @@ public class ProducerResolver extends AbstractAnnotationResolver {
         value = annotatedBeanName.value();
         context = applicationContext;
         register = annotatedBeanName.register();
+
+        ServerProperties bean = applicationContext.getBean(ServerProperties.class);
+        Integer port = bean.getPort();
+        String contextPath = bean.getServlet().getContextPath();
+        System.err.println("this is debugger");
+
+
 
     }
 }

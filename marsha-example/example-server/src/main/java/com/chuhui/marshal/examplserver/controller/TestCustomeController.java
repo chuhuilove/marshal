@@ -3,6 +3,7 @@ package com.chuhui.marshal.examplserver.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
@@ -19,14 +20,17 @@ public class TestCustomeController {
 
     @GetMapping("/getAll.do")
     public String getAlll() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
+        return "/getAll.do"+UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    @GetMapping("/getAll.do/{userName}")
+    public String getNotpp() {
+        return "/getAll.do/"+UUID.randomUUID().toString().replaceAll("-", "");
+    }
 
     @RequestMapping()
-    public String getTestNull(){
-        return "nullGetMapping"+UUID.randomUUID().toString().replaceAll("-", "");
+    public String getTestNull() {
+        return "nullGetMapping" + UUID.randomUUID().toString().replaceAll("-", "");
     }
-
 
 }

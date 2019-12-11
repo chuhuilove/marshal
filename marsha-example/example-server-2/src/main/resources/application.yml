@@ -1,5 +1,7 @@
 server:
   port: 9633
-  servlet:
-    context-path: /example-server
-
+#  servlet:
+#    context-path: /example-server
+spring:
+  application:
+    name: application

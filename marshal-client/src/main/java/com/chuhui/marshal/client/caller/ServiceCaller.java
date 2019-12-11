@@ -1,8 +1,6 @@
 package com.chuhui.marshal.client.caller;
 
 import com.chuhui.marshal.client.network.AbstractClientContextFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Type;
 
@@ -24,18 +22,14 @@ public class ServiceCaller implements MarshalClientCaller {
         this.clientContextFactory=clientContextFactory;
     }
 
+
     @Override
-    public <T> T get(String serviceName, Object param, Type clazz) {
-
-        // 去服务端查找
-//        clientContextFactory.sendMessage();
-
-
-
+    public <T> T get(String group, String serviceName, Object param, Type clazz) {
 
 
 
 
         return null;
+
     }
 }

@@ -32,7 +32,6 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
     final static private Logger logger = LoggerFactory.getLogger(ConsumerResolver.class);
 
     private String[] marshalServer;
-    private String[] requireProducer;
     private String name;
 
     @Override
@@ -44,10 +43,6 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
         ConsumerRequestPackage.Builder builder = ConsumerRequestPackage.newBuilder()
                 .setName(name);
 
-        for (int i = 0; i < requireProducer.length; i++) {
-            builder.addRequireProducer(requireProducer[i]);
-        }
-
         ConsumerRequestPackage build = builder.build();
         clientContextFactory.sendMessage(CLIENT_REMOTE_REQUEST_FLAG.CONSUMER_FIRST_REQUEST,build.toByteArray());
     }
@@ -57,7 +52,6 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
         EnableMarshalConsumer consumer = getAnnotatedBeanName(applicationContext, EnableMarshalConsumer.class);
         //        // 获取到三个属性...
         marshalServer = consumer.marshalServer();
-        requireProducer = consumer.requireProducer();
         name = consumer.name();
         context = applicationContext;
     }

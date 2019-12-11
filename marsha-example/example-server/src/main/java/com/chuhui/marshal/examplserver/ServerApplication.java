@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date: 2019/12/3 0003
  * @Description:TODO
  */
-@EnableMarshalProducer(value = "example-server-1", group = "example-server", marshalServer = {"127.0.0.1:1125", "127.0.0.1:1126"}, selfAddress = "127.0.0.1:9632")
+//@EnableMarshalProducer(value = "example-server-1", group = "example-server", marshalServer = {"127.0.0.1:1125", "127.0.0.1:1126"}, selfAddress = "127.0.0.1:9632")
 @SpringBootApplication
 public class ServerApplication {
 

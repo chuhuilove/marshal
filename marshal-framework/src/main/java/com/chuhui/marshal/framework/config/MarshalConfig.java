@@ -35,6 +35,11 @@ public class MarshalConfig {
      */
     private Integer rcvbufAllocatorSize;
 
+    /**
+     * 内置web服务端口
+     */
+    private Integer webServerPort;
+
     public static MarshalConfig readConfigFromFile(String configFileName) {
         InputStream fileStream = openFileAsInputStream(configFileName);
         Yaml yaml = new Yaml();

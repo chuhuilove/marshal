@@ -1,5 +1,6 @@
 package com.chuhui.marshal.examplclient.controller;
 
+import com.chuhui.marshal.client.caller.MarshalClientCaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +18,21 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class UserController {
 
-    @Autowired
-    private RestTemplate template;
 
+
+    @Autowired
+    private MarshalClientCaller serviceCaller;
 
     @GetMapping("/userOrder/{userName}")
+
     public void getUserOrder(@PathVariable String userName) {
-        String str = template.getForObject("http://127.0.0.1:9632/example-server/orderServiceOne/" + userName, String.class);
-        System.err.println(str);
-        ResponseEntity<Integer> integerResponseEntity = template.postForEntity("http://127.0.0.1:9632/example-server/postRequest", str, int.class);
-        System.err.println(integerResponseEntity.getBody());
+
+        serviceCaller.get("example-server/orderService/",userName,String.class);
+
+//        String str = template.getForObject("http://127.0.0.1:9632/example-server/orderServiceOne/" + userName, String.class);
+//        System.err.println(str);
+//        ResponseEntity<Integer> integerResponseEntity = template.postForEntity("http://127.0.0.1:9632/example-server/postRequest", str, int.class);
+//        System.err.println(integerResponseEntity.getBody());
 
     }
 

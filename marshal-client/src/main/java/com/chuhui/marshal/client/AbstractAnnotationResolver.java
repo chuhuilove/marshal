@@ -52,7 +52,6 @@ public abstract class AbstractAnnotationResolver implements InitializingBean, Ap
             throw new IllegalArgumentException("");
         }
 
-
         for (Map.Entry<String, Object> entry : beans.entrySet()) {
             Object value = entry.getValue();
             return value.getClass().getAnnotation(clazz);

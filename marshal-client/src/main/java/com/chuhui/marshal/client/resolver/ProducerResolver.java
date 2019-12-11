@@ -171,9 +171,6 @@ public class ProducerResolver extends AbstractAnnotationResolver {
         if(!group.startsWith(URL_DELIMITER)){
             group=URL_DELIMITER+group;
         }
-        if(!group.endsWith(URL_DELIMITER)){
-            group=group+URL_DELIMITER;
-        }
         marshalServer = annotatedBeanName.marshalServer();
         selfAddress = annotatedBeanName.selfAddress();
         value = annotatedBeanName.value();

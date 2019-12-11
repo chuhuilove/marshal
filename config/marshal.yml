@@ -9,4 +9,7 @@ serverFactory: com.chuhui.marshal.server.serverfactory.NettyServerFactory
 #marshal服务端允许接收请求包的最大长度
 rcvbufAllocatorSize: 65536
 
+# 内置web服务端口
+webServerPort: 7895
+
 

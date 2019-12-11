@@ -156,11 +156,9 @@ public class NettyServerFactory extends ServerContextFactory {
 
                 ByteBuf byteBuf = (ByteBuf) msg;
                 NettyServerContext context = ctx.channel().attr(CONNECTION_ATTRIBUTE).get();
-
                 context.processMessage(byteBuf);
 
                 // 堆外内存,直接调用array()方法,会出现的 java.lang.UnsupportedOperationException: direct buffer异常///
-                //
                 // https://stackoverflow.com/questions/52658774/netty-io-netty-buffer-bytebuf-array-throws-exception-direct-buffer
 
             } finally {

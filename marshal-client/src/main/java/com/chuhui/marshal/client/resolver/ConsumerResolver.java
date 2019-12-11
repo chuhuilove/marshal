@@ -2,12 +2,15 @@ package com.chuhui.marshal.client.resolver;
 
 import com.chuhui.marshal.client.AbstractAnnotationResolver;
 import com.chuhui.marshal.client.annotation.EnableMarshalConsumer;
+import com.chuhui.marshal.client.caller.MarshalClientCaller;
+import com.chuhui.marshal.client.caller.ServiceCaller;
 import com.chuhui.marshal.framework.transfer.google.ConsumerRequestPackage;
 import com.chuhui.marshal.framework.utils.Constant.CLIENT_REMOTE_REQUEST_FLAG;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 
@@ -28,11 +31,9 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
 
     final static private Logger logger = LoggerFactory.getLogger(ConsumerResolver.class);
 
-
     private String[] marshalServer;
     private String[] requireProducer;
     private String name;
-
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -62,5 +63,12 @@ public class ConsumerResolver extends AbstractAnnotationResolver {
     }
 
 
+    @Bean
+    public MarshalClientCaller serviceCaller(){
+        ServiceCaller serviceCaller = new ServiceCaller(clientContextFactory);
+
+        return serviceCaller;
+
+    }
 
 }

@@ -114,9 +114,7 @@ public class NettyServerContext extends ServerContext {
             PRODUCER_SERVICES.put(requestPackage.getServerGroup(), services);
         }
         services.add(requestPackage);
-
-
-
+        System.err.println(requestPackage.toString());
     }
 
     @Override

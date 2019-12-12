@@ -31,10 +31,7 @@ public class ServiceDefinition {
      */
     private String[] requestMethod;
 
-    /**
-     * 服务所在的类的全路径名
-     */
-    private String className;
+
 
     /**
      * service 上标注的注解
@@ -53,7 +50,6 @@ public class ServiceDefinition {
 
 
     public ServiceDefinition(String className, String[] mainPath) {
-        this.className = className;
         this.mainPath = mainPath;
     }
 

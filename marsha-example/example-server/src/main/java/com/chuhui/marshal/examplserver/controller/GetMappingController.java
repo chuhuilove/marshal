@@ -15,14 +15,23 @@ import java.util.UUID;
  * @Description:TODO
  */
 @RestController
-@RequestMapping(method = {RequestMethod.DELETE, RequestMethod.PUT})
+@RequestMapping(value = "demoContr",method = {RequestMethod.DELETE, RequestMethod.PUT})
 public class GetMappingController {
 
 
-    @GetMapping("/function")
+
+    @RequestMapping("/function2")
     public String function() {
         return " uuid is:" + UUID.randomUUID().toString();
     }
 
+    @RequestMapping()
+    public String getTestNull() {
+        return "nullGetMapping" + UUID.randomUUID().toString().replaceAll("-", "");
+    }
+    @GetMapping("/function")
+    public String getTestNull12345() {
+        return "getTestNull12345" + UUID.randomUUID().toString().replaceAll("-", "");
+    }
 
 }

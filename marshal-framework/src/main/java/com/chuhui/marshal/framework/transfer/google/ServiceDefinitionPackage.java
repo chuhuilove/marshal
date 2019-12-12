@@ -21,6 +21,7 @@ private static final long serialVersionUID = 0L;
     className_ = "";
     serviceRequestAnnotation_ = "";
     serviceUrl_ = "";
+    serviceName_ = "";
   }
 
   @java.lang.Override
@@ -78,6 +79,12 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             serviceUrl_ = s;
+            break;
+          }
+          case 50: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            serviceName_ = s;
             break;
           }
           default: {
@@ -281,6 +288,40 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int SERVICENAME_FIELD_NUMBER = 6;
+  private volatile java.lang.Object serviceName_;
+  /**
+   * <code>string serviceName = 6;</code>
+   */
+  public java.lang.String getServiceName() {
+    java.lang.Object ref = serviceName_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      serviceName_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string serviceName = 6;</code>
+   */
+  public com.google.protobuf.ByteString
+      getServiceNameBytes() {
+    java.lang.Object ref = serviceName_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      serviceName_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -309,6 +350,9 @@ private static final long serialVersionUID = 0L;
     }
     if (!getServiceUrlBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, serviceUrl_);
+    }
+    if (!getServiceNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, serviceName_);
     }
     unknownFields.writeTo(output);
   }
@@ -339,6 +383,9 @@ private static final long serialVersionUID = 0L;
     if (!getServiceUrlBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, serviceUrl_);
     }
+    if (!getServiceNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, serviceName_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -364,6 +411,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getServiceRequestAnnotation())) return false;
     if (!getServiceUrl()
         .equals(other.getServiceUrl())) return false;
+    if (!getServiceName()
+        .equals(other.getServiceName())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -387,6 +436,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getServiceRequestAnnotation().hashCode();
     hash = (37 * hash) + SERVICEURL_FIELD_NUMBER;
     hash = (53 * hash) + getServiceUrl().hashCode();
+    hash = (37 * hash) + SERVICENAME_FIELD_NUMBER;
+    hash = (53 * hash) + getServiceName().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -530,6 +581,8 @@ private static final long serialVersionUID = 0L;
 
       serviceUrl_ = "";
 
+      serviceName_ = "";
+
       return this;
     }
 
@@ -567,6 +620,7 @@ private static final long serialVersionUID = 0L;
       result.className_ = className_;
       result.serviceRequestAnnotation_ = serviceRequestAnnotation_;
       result.serviceUrl_ = serviceUrl_;
+      result.serviceName_ = serviceName_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -640,6 +694,10 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getServiceUrl().isEmpty()) {
         serviceUrl_ = other.serviceUrl_;
+        onChanged();
+      }
+      if (!other.getServiceName().isEmpty()) {
+        serviceName_ = other.serviceName_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -1038,6 +1096,75 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       serviceUrl_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object serviceName_ = "";
+    /**
+     * <code>string serviceName = 6;</code>
+     */
+    public java.lang.String getServiceName() {
+      java.lang.Object ref = serviceName_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        serviceName_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string serviceName = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getServiceNameBytes() {
+      java.lang.Object ref = serviceName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serviceName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string serviceName = 6;</code>
+     */
+    public Builder setServiceName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      serviceName_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string serviceName = 6;</code>
+     */
+    public Builder clearServiceName() {
+      
+      serviceName_ = getDefaultInstance().getServiceName();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string serviceName = 6;</code>
+     */
+    public Builder setServiceNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      serviceName_ = value;
       onChanged();
       return this;
     }

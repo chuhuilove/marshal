@@ -51,12 +51,13 @@ public final class Protocol {
       "erverGroup\030\001 \001(\t\022\023\n\013selfAddress\030\002 \001(\t\022\022\n" +
       "\nserverName\030\003 \001(\t\022[\n\013definitions\030\004 \003(\0132F" +
       ".com.chuhui.marshal.framework.transfer.g" +
-      "oogle.ServiceDefinitionPackage\"\216\001\n\030Servi" +
+      "oogle.ServiceDefinitionPackage\"\243\001\n\030Servi" +
       "ceDefinitionPackage\022\022\n\nmethodName\030\001 \001(\t\022" +
       "\025\n\rrequestMethod\030\002 \003(\t\022\021\n\tclassName\030\003 \001(" +
       "\t\022 \n\030serviceRequestAnnotation\030\004 \001(\t\022\022\n\ns" +
-      "erviceUrl\030\005 \001(\tB0\n,com.chuhui.marshal.fr" +
-      "amework.transfer.googleP\001b\006proto3"
+      "erviceUrl\030\005 \001(\t\022\023\n\013serviceName\030\006 \001(\tB0\n," +
+      "com.chuhui.marshal.framework.transfer.go" +
+      "ogleP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -93,7 +94,7 @@ public final class Protocol {
     internal_static_com_chuhui_marshal_framework_transfer_google_ServiceDefinitionPackage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_chuhui_marshal_framework_transfer_google_ServiceDefinitionPackage_descriptor,
-        new java.lang.String[] { "MethodName", "RequestMethod", "ClassName", "ServiceRequestAnnotation", "ServiceUrl", });
+        new java.lang.String[] { "MethodName", "RequestMethod", "ClassName", "ServiceRequestAnnotation", "ServiceUrl", "ServiceName", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

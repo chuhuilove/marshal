@@ -1,8 +1,10 @@
 package com.chuhui.marshal.examplserver.controller;
 
+import org.springframework.core.Ordered;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
 import java.util.UUID;
 
 /**
@@ -14,7 +16,13 @@ import java.util.UUID;
  */
 @CustomeController
 @RequestMapping("cyziCustomeController")
-public class TestCustomeController {
+public class TestCustomeController implements Ordered {
+
+
+    @PostConstruct
+    public void init(){
+        System.err.println("TestCustomeController  init");
+    }
 
 
     @GetMapping("/getAll.do")
@@ -29,4 +37,8 @@ public class TestCustomeController {
     }
 
 
+    @Override
+    public int getOrder() {
+        return 1;
+    }
 }

@@ -2,8 +2,10 @@ package com.chuhui.marshal.examplserver.controller;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.Ordered;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +19,14 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping({"orderMain", "orderPower"})
-public class OrderController {
+public class OrderController implements Ordered {
+
+
+    @PostConstruct
+    public void init(){
+        System.err.println("OrderController  init");
+    }
+
 
     @GetMapping(path = {"/orderService/{userName}", "/orderPowerService/{userName}"})
     public List<UserOrderModel> orderService(@PathVariable String userName) {
@@ -69,6 +78,11 @@ public class OrderController {
 
     private static String[] commodityNames = new String[]{"杜蕾斯", "洗头膏", "剃须泡", "香皂", "纸巾"};
     private static Long[] shopIds = new Long[]{1L, 2L, 3L, 4L, 5L};
+
+    @Override
+    public int getOrder() {
+        return 2;
+    }
 
 
     @Getter

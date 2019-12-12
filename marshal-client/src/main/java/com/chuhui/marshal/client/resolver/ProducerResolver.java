@@ -6,25 +6,25 @@ import com.chuhui.marshal.framework.transfer.google.ProducerRequestPackage;
 import com.chuhui.marshal.framework.transfer.google.ServiceDefinitionPackage;
 import com.chuhui.marshal.framework.transfer.service.ServiceDefinition;
 import com.chuhui.marshal.framework.transfer.service.UrlServiceDefinition;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.MethodIntrospector.MetadataLookup;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
-import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
-import static com.chuhui.marshal.client.resolver.ResolveRequestMapping.disintegrateServiceDefinition;
-import static com.chuhui.marshal.client.resolver.ResolveRequestMapping.parseRequestMapping;
-import static com.chuhui.marshal.framework.utils.Constant.*;
-import static com.chuhui.marshal.framework.utils.DataCheckUtils.arrayDeduplication;
+import static com.chuhui.marshal.client.resolver.ResolveRequestMapping.MethodRequestMapping;
+import static com.chuhui.marshal.client.resolver.ResolveRequestMapping.getMappingForMethod;
+import static com.chuhui.marshal.framework.utils.Constant.SPRING_FRAMEWORK_CONTROLLER_PREFIX;
+import static com.chuhui.marshal.framework.utils.Constant.URL_DELIMITER;
+import static org.springframework.core.MethodIntrospector.selectMethods;
 
 /**
  * ResolveEnableMarshalProducer
@@ -47,17 +47,15 @@ public class ProducerResolver extends AbstractAnnotationResolver {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
-        //生产者端,数据组织的真的不好
-        // 下面挂着N多个
-        List<ServiceDefinition> definitions = resolveController();
+        resolveController();
+       /* List<ServiceDefinition> definitions = resolveController();
 
         List<UrlServiceDefinition> serviceDefinitions = disintegrateServiceDefinition(definitions);
 
         startRemoteClient(marshalServer);
         ProducerRequestPackage requestPackage = buildRegisterPackage(serviceDefinitions);
         clientContextFactory.sendMessage(CLIENT_REMOTE_REQUEST_FLAG.PRODUCER_FIRST_REQUEST, requestPackage.toByteArray());
-
+*/
     }
 
     private ProducerRequestPackage buildRegisterPackage(List<UrlServiceDefinition> serviceDefinitions) {
@@ -73,7 +71,10 @@ public class ProducerResolver extends AbstractAnnotationResolver {
                     .setServiceUrl(e.getServiceUrl())
                     .setServiceRequestAnnotation(e.getServiceRequestAnnotation())
                     .addAllRequestMethod(Arrays.asList(e.getRequestMethod()))
+                    .setServiceName(e.getServiceUrl().replaceAll(URL_DELIMITER, "."))
                     .build();
+
+            // 设置新增数据
 
             builder.addDefinitions(build);
         });
@@ -81,6 +82,11 @@ public class ProducerResolver extends AbstractAnnotationResolver {
         return builder.build();
     }
 
+    /**
+     * 从context工厂中获取需要解析的controller类
+     *
+     * @return
+     */
     private List<ServiceDefinition> resolveController() {
 
 
@@ -95,68 +101,63 @@ public class ProducerResolver extends AbstractAnnotationResolver {
          */
         Map<String, Object> coreBeans = context.getBeansWithAnnotation(Controller.class);
 
-        // 服务所在组 group+一级RequestMapping+二级RequestMapping
-
         Collection<Object> values = coreBeans.values();
+
+
         final List<ServiceDefinition> definitions = new ArrayList<>();
 
-        if (CollectionUtils.isNotEmpty(values)) {
-            values.forEach(e -> {
 
-                String className = e.getClass().getName();
+        List<MethodRequestMapping> methodRequestMappings = values.stream().map((value) -> {
+            Class<?> userType = ClassUtils.getUserClass(value.getClass());
+            String className = userType.getName();
+            if (!isSpring(className) || register) {
+                return resolveMethodAndRequestMapping(userType);
+            }
+            return null;
+        }).filter(Objects::nonNull).flatMap(List::stream).collect(Collectors.toList());
 
-                if (className.startsWith(SPRING_FRAMEWORK_CONTROLLER_PREFIX) && register) {
-                    // 允许注册以org.springframework.开头的controller
-                    resolveControllerInstance(e, definitions, className);
+        methodRequestMappings.forEach(e -> {
+            System.err.println(e.method.getName());
 
-                } else if (!className.startsWith(SPRING_FRAMEWORK_CONTROLLER_PREFIX)) {
-                    // 不是以org.springframework.开头的类
-                    resolveControllerInstance(e, definitions, className);
-                }
-            });
-        }
+
+            RequestMappingInfo mappingInfo = e.mappingInfo;
+
+            // 请求方法
+            Set<RequestMethod> methods = mappingInfo.getMethodsCondition().getMethods();
+
+            Set<String> patterns = mappingInfo.getPatternsCondition().getPatterns();
+
+            System.err.println(methods);
+
+            System.err.println(patterns);
+
+
+            System.err.println("============================");
+
+            // 重新设计...
+
+        });
+
+
+
+
 
         return definitions;
     }
 
-    private void resolveControllerInstance(Object e, List<ServiceDefinition> definitions, String className) {
 
-        RequestMapping annotation = AnnotationUtils.findAnnotation(e.getClass(), RequestMapping.class);
-        String[] mainPaths = requestMappingPath(annotation);
-        Method[] methods = e.getClass().getDeclaredMethods();
-
-        if (ArrayUtils.isNotEmpty(methods)) {
-
-            for (Method method : methods) {
-                ServiceDefinition serviceDefinition = new ServiceDefinition(className, mainPaths);
-
-                // 需要判端一下,是不是需要将service添加到service中....
-                if (parseRequestMapping(method, serviceDefinition)) {
-                    definitions.add(serviceDefinition);
-                }
-            }
-        }
+    private boolean isSpring(String className) {
+        return className.startsWith(SPRING_FRAMEWORK_CONTROLLER_PREFIX);
     }
 
-    /**
-     * 解析Class上的RequestMapping注解
-     *
-     * @param requestMapping
-     * @return
-     */
-    private static String[] requestMappingPath(RequestMapping requestMapping) {
-        if (requestMapping == null) {
-            return new String[]{URL_DELIMITER};
-        } else {
-            String[] path = requestMapping.path();
-            if (ArrayUtils.isNotEmpty(path)) {
-                return arrayDeduplication(path);
-            } else {
-                String[] value = requestMapping.value();
-                return ArrayUtils.isNotEmpty(value) ? arrayDeduplication(value) : new String[]{URL_DELIMITER};
-            }
-        }
+    private List<MethodRequestMapping> resolveMethodAndRequestMapping(final Class<?> classType) {
+
+        return selectMethods(classType, (MetadataLookup<RequestMappingInfo>) method -> getMappingForMethod(method, classType))
+                .entrySet().stream().map(e -> new MethodRequestMapping(e.getKey(), e.getValue())).collect(Collectors.toList());
+
     }
+
+
 
 
     private String group;
@@ -171,8 +172,8 @@ public class ProducerResolver extends AbstractAnnotationResolver {
 
         group = annotatedBeanName.group();
 
-        if(!group.startsWith(URL_DELIMITER)){
-            group=URL_DELIMITER+group;
+        if (!group.startsWith(URL_DELIMITER)) {
+            group = URL_DELIMITER + group;
         }
         marshalServer = annotatedBeanName.marshalServer();
         selfAddress = annotatedBeanName.selfAddress();
@@ -180,12 +181,14 @@ public class ProducerResolver extends AbstractAnnotationResolver {
         context = applicationContext;
         register = annotatedBeanName.register();
 
-        ServerProperties bean = applicationContext.getBean(ServerProperties.class);
-        Integer port = bean.getPort();
-        String contextPath = bean.getServlet().getContextPath();
-        System.err.println("this is debugger");
+//        ServerProperties bean = applicationContext.getBean(ServerProperties.class);
+//        Integer port = bean.getPort();
+//        String contextPath = bean.getServlet().getContextPath();
+//        System.err.println("this is debugger");
 
-
+        // 整体设计有些冗余....
+        // 牵扯的类太多了
+        // 今天先完成调用,其他的再说吧....
 
     }
 }

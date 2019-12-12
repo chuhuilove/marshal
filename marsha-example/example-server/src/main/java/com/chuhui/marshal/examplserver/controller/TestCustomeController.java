@@ -28,9 +28,5 @@ public class TestCustomeController {
         return "/getAll.do/"+UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    @RequestMapping()
-    public String getTestNull() {
-        return "nullGetMapping" + UUID.randomUUID().toString().replaceAll("-", "");
-    }
 
 }

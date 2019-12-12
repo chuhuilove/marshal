@@ -65,4 +65,14 @@ public interface ServiceDefinitionPackageOrBuilder extends
    */
   com.google.protobuf.ByteString
       getServiceUrlBytes();
+
+  /**
+   * <code>string serviceName = 6;</code>
+   */
+  java.lang.String getServiceName();
+  /**
+   * <code>string serviceName = 6;</code>
+   */
+  com.google.protobuf.ByteString
+      getServiceNameBytes();
 }

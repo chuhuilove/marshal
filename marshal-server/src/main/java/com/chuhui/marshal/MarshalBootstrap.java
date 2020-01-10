@@ -33,8 +33,6 @@ public class MarshalBootstrap {
 
         MarshalBootstrap marshal = new MarshalBootstrap();
         marshal.initConfig(args);
-
-
     }
 
     private void initConfig(String[] args) {

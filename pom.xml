@@ -15,6 +15,7 @@
         <module>marshal-client</module>
         <module>marsha-example</module>
         <module>marshal-spring-boot-starter</module>
+        <module>marshal-spring-boot-autoconfigure</module>
     </modules>
     <properties>
         <!--<netty.version>4.1.40.Final</netty.version>-->
@@ -27,7 +28,7 @@
         <spring-framework.version>5.1.10.cyzi</spring-framework.version>
         <lombok.version>1.18.8</lombok.version>
         <google-protocol.version>3.6.1</google-protocol.version>
-
+        <spring-boot.version>2.1.9.RELEASE.cyzi</spring-boot.version>
 
     </properties>
     <build>

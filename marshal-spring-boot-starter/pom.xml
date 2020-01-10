@@ -12,19 +12,13 @@
     <artifactId>marshal-spring-boot-starter</artifactId>
     <version>1.0.1</version>
     <properties>
-        <spring-boot.version>2.1.9.RELEASE.cyzi</spring-boot.version>
+
     </properties>
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>${spring-boot.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.chuhui.marshal</groupId>
-            <artifactId>marshal-client</artifactId>
-            <version>${MARSHAL-VERSION}</version>
+            <artifactId>marshal-spring-boot-autoconfigure</artifactId>
         </dependency>
 
     </dependencies>

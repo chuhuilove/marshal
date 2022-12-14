@@ -11,7 +11,7 @@
 
     <artifactId>marshal-framework</artifactId>
     <properties>
-        <yml.version>1.25</yml.version>
+        <yml.version>1.32</yml.version>
         <lombok.version>1.18.8</lombok.version>
         <commons-io.version>2.6</commons-io.version>
     </properties>
